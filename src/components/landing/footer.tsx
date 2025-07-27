@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
-    <footer className="bg-secondary text-secondary-foreground py-12">
+    <footer className="bg-secondary text-secondary-foreground py-12 w-full">
       <div className="container grid grid-cols-1 gap-8 px-4 md:grid-cols-4 md:px-6">
         <div className="flex flex-col gap-2">
           <Link href="#" className="flex items-center gap-2" prefetch={false}>
