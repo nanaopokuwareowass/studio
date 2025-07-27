@@ -2,49 +2,34 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Image from "next/image";
 
 export function Join() {
   return (
-    <section className="w-full py-16 md:py-24 lg:py-32 bg-background">
+    <section className="w-full py-16 md:py-24 lg:py-32 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center">
           <div className="space-y-6">
-            <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm">Partner With Us</div>
+            <div className="inline-block rounded-lg bg-background px-3 py-1 text-sm">Partner With Us</div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Join as a Detailer or Vendor
             </h2>
             <p className="text-muted-foreground md:text-xl">
-              Are you a professional auto detailer or a vendor of quality car care products? Join our network and grow your business with DT GUYS PRO.
+              Are you a professional auto detailer or a vendor of quality car care products? Join our network and grow your business with DT GUYS PRO. We provide the platform to connect you with customers who need your services and products.
             </p>
-            <p className="text-muted-foreground md:text-xl">
-              We provide the platform to connect you with customers who need your services and products.
-            </p>
+            <Button size="lg" className="mt-4">
+               <a href="#contact">Get Started</a>
+            </Button>
           </div>
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle>Register Your Interest</CardTitle>
-              <CardDescription>Fill out the form below and we'll be in touch.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" placeholder="John Doe" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" placeholder="+1 (555) 555-5555" />
-                </div>
-                <Button type="submit" className="w-full">
-                  Submit Interest
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+          <div className="relative w-full h-80 lg:h-96">
+             <Image
+              src="https://placehold.co/600x400.png"
+              fill
+              alt="Join Us"
+              className="rounded-xl object-cover shadow-2xl"
+              data-ai-hint="car wash team"
+            />
+          </div>
         </div>
       </div>
     </section>

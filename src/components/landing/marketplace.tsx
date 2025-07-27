@@ -12,9 +12,9 @@ export function Marketplace() {
   ];
 
   return (
-    <section id="marketplace" className="w-full py-16 md:py-24 lg:py-32 bg-background">
+    <section id="marketplace" className="w-full py-16 md:py-24 lg:py-32 bg-secondary">
       <div className="container mx-auto px-4 md:px-6 text-center">
-        <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm mb-4">Shop Products</div>
+        <div className="inline-block rounded-lg bg-background px-3 py-1 text-sm mb-4">Shop Products</div>
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
           Car Care Marketplace
         </h2>
@@ -23,7 +23,7 @@ export function Marketplace() {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
           {products.map((product) => (
-            <Card key={product.name} className="overflow-hidden transition-transform transform-gpu hover:-translate-y-2 hover:shadow-2xl">
+            <Card key={product.name} className="overflow-hidden transition-transform transform-gpu hover:-translate-y-2 hover:shadow-2xl text-left">
               <CardHeader className="p-0">
                 <div className="relative aspect-square">
                   <Image
@@ -36,8 +36,8 @@ export function Marketplace() {
                 </div>
               </CardHeader>
               <CardContent className="p-6">
-                {product.icon}
-                <CardTitle className="mt-4">{product.name}</CardTitle>
+                <div className="mb-4">{product.icon}</div>
+                <CardTitle>{product.name}</CardTitle>
               </CardContent>
             </Card>
           ))}

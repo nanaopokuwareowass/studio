@@ -25,10 +25,10 @@ export function Header() {
 
   return (
     <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-sm shadow-md' : 'bg-transparent'}`}>
-      <div className="container mx-auto flex h-16 items-center px-4 md:px-6">
+      <div className="container mx-auto flex h-20 items-center px-4 md:px-6">
         <a className="mr-6 flex items-center gap-2" href="#home">
           <Car className="h-6 w-6" />
-          <span className="font-bold">DT GUYS PRO</span>
+          <span className="font-bold text-lg">DT GUYS PRO</span>
         </a>
         <nav className="hidden md:flex flex-1 items-center gap-6">
           {navLinks}
@@ -55,13 +55,11 @@ export function Header() {
                   <Car className="h-6 w-6" />
                   <span>DT GUYS PRO</span>
                 </a>
-                <nav className="grid gap-4">
+                <nav className="grid gap-4 text-lg">
                   {navLinks}
+                   <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="#contact">Book Now</a>
                 </nav>
                  <div className="flex flex-col gap-4">
-                   <Button asChild>
-                    <a href="#contact">Book Now</a>
-                  </Button>
                   <Button variant="outline" asChild>
                     <a href="#">Login</a>
                   </Button>

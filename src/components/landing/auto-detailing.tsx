@@ -6,9 +6,9 @@ export function AutoDetailing() {
     <section id="auto-detailing" className="w-full py-16 md:py-24 lg:py-32 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
-           <div className="relative aspect-square">
+           <div className="relative aspect-video">
             <Image
-              src="https://placehold.co/600x600.png"
+              src="https://placehold.co/600x400.png"
               fill
               alt="Auto Detailing"
               className="rounded-xl object-cover shadow-2xl"
