@@ -1,7 +1,27 @@
-export default function Home() {
+import { Header } from "@/components/landing/header";
+import { Hero } from "@/components/landing/hero";
+import { About } from "@/components/landing/about";
+import { AutoDetailing } from "@/components/landing/auto-detailing";
+import { Marketplace } from "@/components/landing/marketplace";
+import { Benefits } from "@/components/landing/benefits";
+import { Join } from "@/components/landing/join";
+import { Contact } from "@/components/landing/contact";
+import { Footer } from "@/components/landing/footer";
+
+export default function LandingPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Hello, world!</h1>
-    </main>
+    <div className="flex flex-col min-h-screen bg-background">
+      <Header />
+      <main className="flex-1">
+        <Hero />
+        <About />
+        <AutoDetailing />
+        <Marketplace />
+        <Benefits />
+        <Join />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   );
 }
