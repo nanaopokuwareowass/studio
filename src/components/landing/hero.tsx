@@ -39,6 +39,7 @@ const formSchema = z.object({
   carType: z.string({ required_error: "Please select a car type." }),
   serviceType: z.string({ required_error: "Please select a service type." }),
   preferredDate: z.date({ required_error: "A date is required." }),
+  preferredTime: z.string({ required_error: "A time is required." }),
   specialInstructions: z.string().optional(),
 })
 
@@ -191,47 +192,79 @@ export function Hero() {
                       )}
                     />
                   </div>
-                   <FormField
-                      control={form.control}
-                      name="preferredDate"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col">
-                          <FormLabel>Preferred Date & Time</FormLabel>
-                          <Popover>
-                            <PopoverTrigger asChild>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="preferredDate"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col">
+                            <FormLabel>Preferred Date</FormLabel>
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "w-full justify-start text-left font-normal",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {field.value ? (
+                                      format(field.value, "PPP")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )}
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={field.value}
+                                  onSelect={field.onChange}
+                                  disabled={(date) =>
+                                    date < new Date() || date < new Date("1900-01-01")
+                                  }
+                                  initialFocus
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="preferredTime"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Preferred Time</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <Button
-                                  variant={"outline"}
-                                  className={cn(
-                                    "w-full justify-start text-left font-normal",
-                                    !field.value && "text-muted-foreground"
-                                  )}
-                                >
-                                  <CalendarIcon className="mr-2 h-4 w-4" />
-                                  {field.value ? (
-                                    format(field.value, "PPP")
-                                  ) : (
-                                    <span>Pick a date</span>
-                                  )}
-                                </Button>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a time" />
+                                </SelectTrigger>
                               </FormControl>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                              <Calendar
-                                mode="single"
-                                selected={field.value}
-                                onSelect={field.onChange}
-                                disabled={(date) =>
-                                  date < new Date() || date < new Date("1900-01-01")
-                                }
-                                initialFocus
-                              />
-                            </PopoverContent>
-                          </Popover>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                              <SelectContent>
+                                <SelectItem value="08:00">8:00 AM</SelectItem>
+                                <SelectItem value="09:00">9:00 AM</SelectItem>
+                                <SelectItem value="10:00">10:00 AM</SelectItem>
+                                <SelectItem value="11:00">11:00 AM</SelectItem>
+                                <SelectItem value="12:00">12:00 PM</SelectItem>
+                                <SelectItem value="13:00">1:00 PM</SelectItem>
+                                <SelectItem value="14:00">2:00 PM</SelectItem>
+                                <SelectItem value="15:00">3:00 PM</SelectItem>
+                                <SelectItem value="16:00">4:00 PM</SelectItem>
+                                <SelectItem value="17:00">5:00 PM</SelectItem>
+                                <SelectItem value="18:00">6:00 PM</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                   </div>
                   <FormField
                     control={form.control}
                     name="specialInstructions"
