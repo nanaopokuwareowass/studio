@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -44,7 +45,7 @@ export function Marketplace() {
         </div>
         <div className="mt-12">
           <Button size="lg" asChild>
-            <a href="#">
+            <a href="/marketplace">
               Visit Marketplace <ArrowRight className="ml-2 h-5 w-5" />
             </a>
           </Button>

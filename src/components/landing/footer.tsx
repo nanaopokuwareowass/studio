@@ -1,3 +1,4 @@
+
 import { Car, Twitter, Facebook, Instagram } from "lucide-react";
 
 export function Footer() {
@@ -16,10 +17,10 @@ export function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <nav className="grid gap-2">
-            <a className="text-sm hover:underline underline-offset-4" href="#home">Home</a>
-            <a className="text-sm hover:underline underline-offset-4" href="#contact">Book Now</a>
-            <a className="text-sm hover:underline underline-offset-4" href="#marketplace">Marketplace</a>
-            <a className="text-sm hover:underline underline-offset-4" href="#join">Join Us</a>
+            <a className="text-sm hover:underline underline-offset-4" href="/">Home</a>
+            <a className="text-sm hover:underline underline-offset-4" href="/#contact">Book Now</a>
+            <a className="text-sm hover:underline underline-offset-4" href="/marketplace">Marketplace</a>
+            <a className="text-sm hover:underline underline-offset-4" href="/#join">Join Us</a>
           </nav>
         </div>
         <div>
