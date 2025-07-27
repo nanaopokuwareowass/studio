@@ -4,6 +4,7 @@ import { About } from "@/components/landing/about";
 import { AutoDetailing } from "@/components/landing/auto-detailing";
 import { Marketplace } from "@/components/landing/marketplace";
 import { Benefits } from "@/components/landing/benefits";
+import { Testimonials } from "@/components/landing/testimonials";
 import { Join } from "@/components/landing/join";
 import { Contact } from "@/components/landing/contact";
 import { Footer } from "@/components/landing/footer";
@@ -18,6 +19,7 @@ export default function LandingPage() {
         <AutoDetailing />
         <Marketplace />
         <Benefits />
+        <Testimonials />
         <Join />
         <Contact />
       </main>
