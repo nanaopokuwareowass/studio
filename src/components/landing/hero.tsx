@@ -29,6 +29,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { useToast } from "@/hooks/use-toast"
+import Image from "next/image"
 
 
 const formSchema = z.object({
@@ -63,14 +64,24 @@ export function Hero() {
   }
 
   return (
-    <section id="home" className="w-full py-12 md:py-24 lg:py-32">
+    <section id="home" className="relative w-full py-12 md:py-24 lg:py-32">
+       <div className="absolute inset-0 -z-10">
+        <Image
+          src="https://placehold.co/1920x1080.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          data-ai-hint="driver steering wheel"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center">
           <div className="space-y-6 text-center lg:text-left">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl !leading-tight">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl !leading-tight text-primary-foreground">
               We don’t just clean, we wow!
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto lg:mx-0">
+            <p className="mt-6 text-lg text-primary-foreground/80 md:text-xl max-w-2xl mx-auto lg:mx-0">
               DT GUYS PRO is your premier mobile car wash and car care business, delivering top-notch service right to your doorstep.
             </p>
              <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
