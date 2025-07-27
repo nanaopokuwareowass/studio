@@ -3,7 +3,7 @@ import { Car, Twitter, Facebook, Instagram } from "lucide-react";
 export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="container px-4 md:px-6 py-12 grid gap-8 md:grid-cols-3">
+      <div className="container mx-auto px-4 md:px-6 py-12 grid gap-8 md:grid-cols-3">
         <div className="flex flex-col gap-2">
           <a className="flex items-center gap-2" href="#">
             <Car className="h-8 w-8" />
@@ -31,7 +31,7 @@ export function Footer() {
             </div>
         </div>
       </div>
-      <div className="container px-4 md:px-6 py-6 border-t border-primary-foreground/20">
+      <div className="container mx-auto px-4 md:px-6 py-6 border-t border-primary-foreground/20">
         <p className="text-xs text-primary-foreground/70 text-center">
           &copy; {new Date().getFullYear()} DT GUYS PRO. All rights reserved.
         </p>

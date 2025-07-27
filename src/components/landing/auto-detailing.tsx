@@ -4,7 +4,7 @@ import { Calendar, Car, Leaf, MapPin } from "lucide-react";
 export function AutoDetailing() {
   return (
     <section id="auto-detailing" className="w-full py-16 md:py-24 lg:py-32 bg-secondary">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
            <div className="relative aspect-square">
             <Image

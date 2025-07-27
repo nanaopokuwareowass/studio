@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 export function Join() {
   return (
     <section className="w-full py-16 md:py-24 lg:py-32 bg-background">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center">
           <div className="space-y-6">
             <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm">Partner With Us</div>
