@@ -8,7 +8,7 @@ import { AnimatedSection } from "@/components/animated-section";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center">
+    <div className="flex min-h-[100dvh] flex-col">
       <Header />
       <main className="flex-1 w-full">
         <Hero />
