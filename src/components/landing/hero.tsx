@@ -43,7 +43,7 @@ const formSchema = z.object({
 })
 
 export function Hero() {
-  const { toast } = useToast();
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,7 +59,7 @@ export function Hero() {
     toast({
       title: "Booking Submitted!",
       description: "We've received your request and will be in touch shortly.",
-    });
+    })
     console.log(values)
   }
 
@@ -67,11 +67,11 @@ export function Hero() {
     <section id="home" className="relative w-full pt-20 md:pt-32 lg:pt-48 pb-12 md:pb-24 lg:pb-32">
        <div className="absolute inset-0 -z-10">
         <Image
-          src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/9A293AA236872583F8D8A70129B72F41.jpg"
+          src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/3A4A7F41646E82042129A82D033F5321.jpg"
           alt="Background"
           fill
           className="object-cover"
-          data-ai-hint="car wash"
+          data-ai-hint="driving car"
         />
         <div className="absolute inset-0 bg-black/60" />
       </div>
