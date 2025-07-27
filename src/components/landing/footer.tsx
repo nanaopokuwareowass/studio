@@ -1,9 +1,17 @@
 
+"use client"
 import { Car, Twitter, Facebook, Instagram } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <motion.footer 
+      className="bg-primary text-primary-foreground"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <div className="container mx-auto px-4 md:px-6 py-12 grid gap-8 md:grid-cols-3">
         <div className="flex flex-col gap-2">
           <a className="flex items-center gap-2" href="#">
@@ -17,18 +25,18 @@ export function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <nav className="grid gap-2">
-            <a className="text-sm hover:underline underline-offset-4" href="/">Home</a>
-            <a className="text-sm hover:underline underline-offset-4" href="/#contact">Book Now</a>
-            <a className="text-sm hover:underline underline-offset-4" href="/marketplace">Marketplace</a>
-            <a className="text-sm hover:underline underline-offset-4" href="/#join">Join Us</a>
+            <motion.a whileHover={{ x: 2, color: "#ffffff" }} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors" href="/">Home</motion.a>
+            <motion.a whileHover={{ x: 2, color: "#ffffff" }} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors" href="/#contact">Book Now</motion.a>
+            <motion.a whileHover={{ x: 2, color: "#ffffff" }} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors" href="/marketplace">Marketplace</motion.a>
+            <motion.a whileHover={{ x: 2, color: "#ffffff" }} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors" href="/#join">Join Us</motion.a>
           </nav>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
            <div className="flex items-center gap-4">
-              <a href="#" className="hover:opacity-80 transition-opacity"><Twitter className="w-6 h-6" /></a>
-              <a href="#" className="hover:opacity-80 transition-opacity"><Facebook className="w-6 h-6" /></a>
-              <a href="#" className="hover:opacity-80 transition-opacity"><Instagram className="w-6 h-6" /></a>
+              <motion.a whileHover={{ scale: 1.1, rotate: -5 }} href="#" className="hover:opacity-80 transition-opacity"><Twitter className="w-6 h-6" /></motion.a>
+              <motion.a whileHover={{ scale: 1.1, rotate: 5 }} href="#" className="hover:opacity-80 transition-opacity"><Facebook className="w-6 h-6" /></motion.a>
+              <motion.a whileHover={{ scale: 1.1, rotate: -5 }} href="#" className="hover:opacity-80 transition-opacity"><Instagram className="w-6 h-6" /></motion.a>
             </div>
         </div>
       </div>
@@ -37,6 +45,6 @@ export function Footer() {
           &copy; {new Date().getFullYear()} DT GUYS PRO. All rights reserved.
         </p>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
