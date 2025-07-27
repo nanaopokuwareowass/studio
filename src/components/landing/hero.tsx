@@ -1,11 +1,71 @@
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
+import { cn } from "@/lib/utils"
+
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Calendar } from "@/components/ui/calendar"
+import { useToast } from "@/hooks/use-toast"
+
+
+const formSchema = z.object({
+  fullName: z.string().min(2, { message: "Full name must be at least 2 characters." }),
+  phoneNumber: z.string().min(10, { message: "Please enter a valid phone number." }),
+  location: z.string().min(5, { message: "Please enter a valid location." }),
+  carType: z.string({ required_error: "Please select a car type." }),
+  serviceType: z.string({ required_error: "Please select a service type." }),
+  preferredDate: z.date({ required_error: "A date is required." }),
+  specialInstructions: z.string().optional(),
+})
 
 export function Hero() {
+  const { toast } = useToast();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      phoneNumber: "",
+      location: "",
+      specialInstructions: "",
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    toast({
+      title: "Booking Submitted!",
+      description: "We've received your request and will be in touch shortly.",
+    });
+    console.log(values)
+  }
+
   return (
-    <section id="home" className="relative w-full h-[90vh] min-h-[700px]">
-      <div className="container mx-auto px-4 md:px-6 h-full">
-        <div className="grid lg:grid-cols-2 gap-8 h-full items-center">
+    <section id="home" className="w-full py-12 md:py-24 lg:py-32">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center">
           <div className="space-y-6 text-center lg:text-left">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl !leading-tight">
               We don’t just clean, we wow!
@@ -13,27 +73,178 @@ export function Hero() {
             <p className="mt-6 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto lg:mx-0">
               DT GUYS PRO is your premier mobile car wash and car care business, delivering top-notch service right to your doorstep.
             </p>
-            <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
-              <Button size="lg" asChild>
-                <a href="#contact">Book a Wash</a>
-              </Button>
+             <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
               <Button size="lg" variant="secondary" asChild>
                 <a href="#marketplace">Explore Products</a>
               </Button>
             </div>
           </div>
-          <div className="relative w-full h-80 lg:h-[500px]">
-            <Image
-              src="https://placehold.co/600x500.png"
-              alt="Hero Image"
-              fill
-              className="object-cover rounded-2xl shadow-2xl"
-              data-ai-hint="car washing vehicle"
-              priority
-            />
-          </div>
+
+          <Card className="w-full max-w-lg mx-auto shadow-2xl">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold tracking-tight text-center">Book Your Wash Instantly</CardTitle>
+              <CardDescription className="text-center">Fill out the form below to schedule your car wash.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="fullName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Full Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="John Doe" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phoneNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Phone Number</FormLabel>
+                          <FormControl>
+                            <Input placeholder="+233 24 123 4567" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Location (GPS / Address)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Osu, Accra" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="carType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Car Type</FormLabel>
+                           <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a car type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="sedan">Sedan</SelectItem>
+                              <SelectItem value="suv">SUV</SelectItem>
+                              <SelectItem value="pickup">Pickup</SelectItem>
+                              <SelectItem value="hatchback">Hatchback</SelectItem>
+                              <SelectItem value="van">Van</SelectItem>
+                              <SelectItem value="coupe">Coupe</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                     <FormField
+                      control={form.control}
+                      name="serviceType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Service Type</FormLabel>
+                           <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a service type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="exterior">Exterior Wash</SelectItem>
+                              <SelectItem value="full">Full Detailing</SelectItem>
+                              <SelectItem value="interior">Interior Cleaning</SelectItem>
+                              <SelectItem value="engine">Engine Wash</SelectItem>
+                              <SelectItem value="wax">Wax & Polish</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                   <FormField
+                      control={form.control}
+                      name="preferredDate"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col">
+                          <FormLabel>Preferred Date & Time</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={"outline"}
+                                  className={cn(
+                                    "w-full justify-start text-left font-normal",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  <CalendarIcon className="mr-2 h-4 w-4" />
+                                  {field.value ? (
+                                    format(field.value, "PPP")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                disabled={(date) =>
+                                  date < new Date() || date < new Date("1900-01-01")
+                                }
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  <FormField
+                    control={form.control}
+                    name="specialInstructions"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Special Instructions (Optional)</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="e.g., Focus on pet hair removal"
+                            className="resize-none"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" size="lg" className="w-full">Confirm Booking</Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>
-  );
+  )
 }
