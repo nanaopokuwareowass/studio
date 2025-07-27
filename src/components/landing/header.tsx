@@ -1,30 +1,76 @@
+"use client"
 import { Button } from "@/components/ui/button";
-import { Car } from "lucide-react";
+import { Car, Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import React from "react";
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = (
+    <>
+      <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="#home">Home</a>
+      <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="#auto-detailing">Auto Detailing</a>
+      <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="#marketplace">Marketplace</a>
+    </>
+  );
+
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center bg-background shadow-sm">
-      <a className="flex items-center justify-center" href="#">
-        <Car className="h-6 w-6" />
-        <span className="sr-only">DT GUYS PRO</span>
-      </a>
-      <nav className="ml-auto flex gap-4 sm:gap-6">
-        <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-          Home
+    <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-sm shadow-md' : 'bg-transparent'}`}>
+      <div className="container flex h-16 items-center px-4 md:px-6">
+        <a className="mr-6 flex items-center gap-2" href="#home">
+          <Car className="h-6 w-6" />
+          <span className="font-bold">DT GUYS PRO</span>
         </a>
-        <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-          Auto Detailing
-        </a>
-        <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-          Marketplace
-        </a>
-        <Button asChild>
-          <a href="#">Book Now</a>
-        </Button>
-        <Button variant="outline" asChild>
-          <a href="#">Login</a>
-        </Button>
-      </nav>
+        <nav className="hidden md:flex flex-1 items-center gap-6">
+          {navLinks}
+        </nav>
+        <div className="hidden md:flex items-center gap-4 ml-auto">
+           <Button asChild>
+            <a href="#contact">Book Now</a>
+          </Button>
+          <Button variant="outline" asChild>
+            <a href="#">Login</a>
+          </Button>
+        </div>
+        <div className="md:hidden ml-auto">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right">
+              <div className="grid gap-4 p-6">
+                <a className="flex items-center gap-2 text-lg font-semibold" href="#home">
+                  <Car className="h-6 w-6" />
+                  <span>DT GUYS PRO</span>
+                </a>
+                <nav className="grid gap-4">
+                  {navLinks}
+                </nav>
+                 <div className="flex flex-col gap-4">
+                   <Button asChild>
+                    <a href="#contact">Book Now</a>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <a href="#">Login</a>
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
     </header>
   );
 }

@@ -5,10 +5,11 @@ import { Label } from "@/components/ui/label";
 
 export function Join() {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+    <section className="w-full py-16 md:py-24 lg:py-32 bg-background">
       <div className="container px-4 md:px-6">
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div className="space-y-4">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center">
+          <div className="space-y-6">
+            <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm">Partner With Us</div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Join as a Detailer or Vendor
             </h2>
@@ -19,7 +20,7 @@ export function Join() {
               We provide the platform to connect you with customers who need your services and products.
             </p>
           </div>
-          <Card>
+          <Card className="shadow-lg">
             <CardHeader>
               <CardTitle>Register Your Interest</CardTitle>
               <CardDescription>Fill out the form below and we'll be in touch.</CardDescription>
@@ -39,7 +40,7 @@ export function Join() {
                   <Input id="phone" type="tel" placeholder="+1 (555) 555-5555" />
                 </div>
                 <Button type="submit" className="w-full">
-                  Submit
+                  Submit Interest
                 </Button>
               </form>
             </CardContent>
