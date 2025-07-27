@@ -2,8 +2,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
-import { Bell, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, User } from "lucide-react";
+import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
+import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -27,20 +27,63 @@ export default function DashboardLayout({
                 <span>Dashboard</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton href="#">
-                <ShoppingBag />
-                <span>My Bookings</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton href="/marketplace">
-                <ShoppingBag />
-                <span>Marketplace</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+
+            <SidebarGroup>
+                <SidebarGroupLabel>Customer</SidebarGroupLabel>
+                <SidebarMenuItem>
+                <SidebarMenuButton href="#">
+                    <ShoppingBag />
+                    <span>My Bookings</span>
+                </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                <SidebarMenuButton href="/marketplace">
+                    <ShoppingBag />
+                    <span>Marketplace</span>
+                </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarGroup>
+
+            <SidebarGroup>
+                <SidebarGroupLabel>Crew</SidebarGroupLabel>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton href="#">
+                        <Briefcase />
+                        <span>Assigned Washes</span>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton href="#">
+                        <Calendar />
+                        <span>My Schedule</span>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarGroup>
+
+            <SidebarGroup>
+                <SidebarGroupLabel>Admin</SidebarGroupLabel>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton href="#">
+                        <Users />
+                        <span>User Management</span>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton href="#">
+                        <Truck />
+                        <span>Bookings Management</span>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton href="#">
+                        <Settings />
+                        <span>Service Management</span>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarGroup>
           </SidebarMenu>
         </SidebarContent>
+        <SidebarSeparator />
         <SidebarFooter>
             <SidebarMenu>
                 <SidebarMenuItem>
