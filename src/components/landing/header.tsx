@@ -40,7 +40,7 @@ export function Header() {
             <a href="/#contact">Book Now</a>
           </Button>
           <Button variant="outline" asChild>
-            <a href="#">Login</a>
+            <a href="/login">Login</a>
           </Button>
         </div>
         <div className="md:hidden ml-auto">
@@ -63,7 +63,7 @@ export function Header() {
                 </nav>
                  <div className="flex flex-col gap-4">
                   <Button variant="outline" asChild>
-                    <a href="#">Login</a>
+                    <a href="/login">Login</a>
                   </Button>
                 </div>
               </div>
