@@ -67,13 +67,13 @@ export function Hero() {
     <section id="home" className="relative w-full pt-20 md:pt-32 lg:pt-48 pb-12 md:pb-24 lg:pb-32">
        <div className="absolute inset-0 -z-10">
         <Image
-          src="https://placehold.co/1920x1080.png"
+          src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/9A293AA236872583F8D8A70129B72F41.jpg"
           alt="Background"
           fill
           className="object-cover"
-          data-ai-hint="driver steering wheel"
+          data-ai-hint="car wash"
         />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/60" />
       </div>
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center">

@@ -23,7 +23,7 @@ export function Join() {
           </div>
           <div className="relative w-full h-80 lg:h-96">
              <Image
-              src="https://placehold.co/600x400.png"
+              src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/9A293AA236872583F8D8A70129B72F41.jpg"
               fill
               alt="Join Us"
               className="rounded-xl object-cover shadow-2xl"

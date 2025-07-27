@@ -8,11 +8,11 @@ export function AutoDetailing() {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
            <div className="relative aspect-video">
             <Image
-              src="https://placehold.co/600x400.png"
+              src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/9A293AA236872583F8D8A70129B72F41.jpg"
               fill
               alt="Auto Detailing"
               className="rounded-xl object-cover shadow-2xl"
-              data-ai-hint="car detailing professional"
+              data-ai-hint="car detailing"
             />
            </div>
           <div className="space-y-6">
