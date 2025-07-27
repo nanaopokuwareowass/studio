@@ -26,11 +26,11 @@ export function Detailing() {
   ];
 
   return (
-    <section id="detailing" className="w-full py-12 md:py-24 lg:py-32">
+    <section id="detailing" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6">
         <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="space-y-4">
-            <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm font-medium font-body">
+            <div className="inline-block rounded-lg bg-background px-3 py-1 text-sm font-medium font-body">
               Auto Detailing
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline">
