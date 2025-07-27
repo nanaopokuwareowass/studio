@@ -36,7 +36,7 @@ export function Contact() {
             <h3 className="text-xl font-semibold">FAQs</h3>
             <p className="text-muted-foreground mt-1">Find answers quickly.</p>
             <Button variant="link" asChild className="mt-2">
-              <a href="#">Visit our FAQs</a>
+              <a href="/#faq">Visit our FAQs</a>
             </Button>
           </div>
         </div>

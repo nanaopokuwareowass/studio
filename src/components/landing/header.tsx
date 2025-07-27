@@ -21,7 +21,9 @@ export function Header() {
     <>
       <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="/">Home</a>
       <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="/#auto-detailing">Auto Detailing</a>
+      <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="/#how-it-works">How it Works</a>
       <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="/marketplace">Marketplace</a>
+      <a className="text-sm font-medium hover:underline underline-offset-4 transition-colors" href="/#faq">FAQs</a>
     </>
   );
 
