@@ -64,7 +64,7 @@ export function Hero() {
   }
 
   return (
-    <section id="home" className="relative w-full py-12 md:py-24 lg:py-32">
+    <section id="home" className="relative w-full pt-20 md:pt-32 lg:pt-48 pb-12 md:pb-24 lg:pb-32">
        <div className="absolute inset-0 -z-10">
         <Image
           src="https://placehold.co/1920x1080.png"
