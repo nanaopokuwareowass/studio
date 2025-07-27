@@ -67,11 +67,11 @@ export function Hero() {
     <section id="home" className="relative w-full pt-20 md:pt-32 lg:pt-48 pb-12 md:pb-24 lg:pb-32">
        <div className="absolute inset-0 -z-10">
         <Image
-          src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/3A4A7F41646E82042129A82D033F5321.jpg"
+          src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/264A7E0011C6F893707B0F3354C15A42.jpg"
           alt="Background"
           fill
           className="object-cover"
-          data-ai-hint="driving car"
+          data-ai-hint="car wash"
         />
         <div className="absolute inset-0 bg-black/60" />
       </div>
