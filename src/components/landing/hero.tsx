@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button";
@@ -63,6 +63,38 @@ export function Hero() {
     })
     console.log(values)
   }
+  
+  const handleGetLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          // You can use a geocoding service to get the address from lat/lng
+          // For now, we'll just set the input to the coordinates
+          form.setValue("location", `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`);
+          toast({
+            title: "Location Captured!",
+            description: "Your current location has been set.",
+          });
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          toast({
+            variant: "destructive",
+            title: "Location Error",
+            description: "Could not retrieve your location. Please enter it manually.",
+          });
+        }
+      );
+    } else {
+       toast({
+        variant: "destructive",
+        title: "Unsupported",
+        description: "Geolocation is not supported by your browser.",
+      });
+    }
+  };
+
 
   return (
     <section id="home" className="relative w-full pt-20 md:pt-32 lg:pt-48 pb-12 md:pb-24 lg:pb-32">
@@ -134,9 +166,21 @@ export function Hero() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Location (GPS / Address)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Osu, Accra" {...field} />
-                        </FormControl>
+                        <div className="relative">
+                          <FormControl>
+                            <Input placeholder="Osu, Accra" {...field} className="pr-10" />
+                          </FormControl>
+                           <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
+                              onClick={handleGetLocation}
+                            >
+                              <MapPin className="h-5 w-5 text-muted-foreground" />
+                              <span className="sr-only">Use current location</span>
+                            </Button>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
