@@ -3,7 +3,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Testimonials() {
@@ -37,6 +36,22 @@ export function Testimonials() {
       avatar: "https://placehold.co/100x100.png",
     }
   ];
+  
+  const duplicatedTestimonials = [...testimonials, ...testimonials];
+
+  const marqueeVariants = {
+    animate: {
+      x: [0, -100 * testimonials.length / (testimonials.length * 2) * (testimonials.length * 400) / (testimonials.length * 100) + '%'],
+      transition: {
+        x: {
+          repeat: Infinity,
+          repeatType: "loop",
+          duration: testimonials.length * 10,
+          ease: "linear",
+        },
+      },
+    },
+  };
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -62,47 +77,40 @@ export function Testimonials() {
               Real stories from satisfied clients who chose DT GUYS PRO.
             </p>
         </div>
-        <div className="mt-12">
-           <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
+        <div className="mt-12 relative overflow-hidden">
+          <motion.div
+            className="flex gap-6"
+            variants={marqueeVariants}
+            animate="animate"
           >
-            <CarouselContent>
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-4 h-full">
-                    <Card className="h-full flex flex-col justify-between shadow-sm hover:shadow-xl transition-shadow bg-background">
-                       <CardContent className="p-6 space-y-4">
-                        <div className="flex">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                          ))}
+            {duplicatedTestimonials.map((testimonial, index) => (
+                <div key={index} className="flex-shrink-0" style={{width: 'clamp(300px, 40vw, 400px)'}}>
+                  <Card className="h-full flex flex-col justify-between shadow-sm hover:shadow-xl transition-shadow bg-background">
+                      <CardContent className="p-6 space-y-4">
+                      <div className="flex">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground text-base">&ldquo;{testimonial.quote}&rdquo;</p>
+                        <div className="flex items-center gap-4 pt-4">
+                        <Avatar>
+                          <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint="person portrait" />
+                          <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-semibold">{testimonial.name}</p>
+                          <p className="text-sm text-muted-foreground">{testimonial.title}</p>
                         </div>
-                        <p className="text-muted-foreground text-base">&ldquo;{testimonial.quote}&rdquo;</p>
-                         <div className="flex items-center gap-4 pt-4">
-                          <Avatar>
-                            <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint="person portrait" />
-                            <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-semibold">{testimonial.name}</p>
-                            <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
-          </Carousel>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </motion.section>
   );
 }
+
