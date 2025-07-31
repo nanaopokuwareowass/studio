@@ -32,9 +32,9 @@ const MainSidebarContent = () => (
             <SidebarGroup>
                 <SidebarGroupLabel>Customer</SidebarGroupLabel>
                 <SidebarMenuItem>
-                    <Link href="/dashboard" passHref>
+                    <Link href="/dashboard/my-bookings" passHref>
                         <SidebarMenuButton>
-                            <ShoppingBag />
+                            <Briefcase />
                             <span>My Bookings</span>
                         </SidebarMenuButton>
                     </Link>
@@ -86,7 +86,7 @@ const MainSidebarContent = () => (
                             <span>Analytics</span>
                         </SidebarMenuButton>
                     </Link>
-                </SidebarMenuItem>
+                </IframeMenuItem>
                  <SidebarMenuItem>
                      <Link href="/dashboard/admin/users" passHref>
                         <SidebarMenuButton>
