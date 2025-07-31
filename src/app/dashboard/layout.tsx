@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
-import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users } from "lucide-react";
+import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -21,7 +21,7 @@ export default function DashboardLayout({
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            <SidebarMenuItem>
+             <SidebarMenuItem>
               <SidebarMenuButton href="/dashboard" isActive>
                 <LayoutGrid />
                 <span>Dashboard</span>
@@ -37,7 +37,7 @@ export default function DashboardLayout({
                 </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                <SidebarMenuButton href="/marketplace">
+                <SidebarMenuButton href="/dashboard/marketplace">
                     <ShoppingBag />
                     <span>Marketplace</span>
                 </SidebarMenuButton>
@@ -62,6 +62,12 @@ export default function DashboardLayout({
 
             <SidebarGroup>
                 <SidebarGroupLabel>Admin</SidebarGroupLabel>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton href="/dashboard/admin">
+                        <LineChart />
+                        <span>Admin Dashboard</span>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
                  <SidebarMenuItem>
                     <SidebarMenuButton href="#">
                         <Users />
