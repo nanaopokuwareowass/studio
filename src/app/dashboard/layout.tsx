@@ -86,7 +86,7 @@ const MainSidebarContent = () => (
                             <span>Analytics</span>
                         </SidebarMenuButton>
                     </Link>
-                </IframeMenuItem>
+                </SidebarMenuItem>
                  <SidebarMenuItem>
                      <Link href="/dashboard/admin/users" passHref>
                         <SidebarMenuButton>
