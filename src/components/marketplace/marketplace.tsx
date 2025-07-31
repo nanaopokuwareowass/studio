@@ -1,4 +1,7 @@
 
+"use client"
+
+import { useState } from "react";
 import { ListFilter, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +17,37 @@ import { ProductFilters } from "@/components/marketplace/product-filters";
 import { Input } from "@/components/ui/input";
 
 export function Marketplace() {
+  const [filters, setFilters] = useState({
+    categories: [] as string[],
+    brands: [] as string[],
+    priceRange: [0, 100],
+    searchQuery: "",
+    sortBy: "newest",
+  });
+
+  const handleCategoryChange = (category: string) => {
+    setFilters(prev => ({
+      ...prev,
+      categories: prev.categories.includes(category)
+        ? prev.categories.filter(c => c !== category)
+        : [...prev.categories, category],
+    }));
+  };
+
+  const handleBrandChange = (brand: string) => {
+     setFilters(prev => ({
+      ...prev,
+      brands: prev.brands.includes(brand)
+        ? prev.brands.filter(b => b !== brand)
+        : [...prev.brands, brand],
+    }));
+  }
+
+  const handlePriceChange = (value: number[]) => {
+    setFilters(prev => ({ ...prev, priceRange: value }));
+  }
+
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
@@ -61,7 +95,14 @@ export function Marketplace() {
 
       <div className="grid lg:grid-cols-4 gap-8">
         <div className="hidden lg:block">
-          <ProductFilters />
+           <ProductFilters 
+            selectedCategories={filters.categories}
+            onCategoryChange={handleCategoryChange}
+            selectedBrands={filters.brands}
+            onBrandChange={handleBrandChange}
+            priceRange={filters.priceRange}
+            onPriceChange={handlePriceChange}
+          />
         </div>
         <div className="lg:col-span-3">
           <ProductGrid />

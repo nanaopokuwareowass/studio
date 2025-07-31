@@ -76,7 +76,7 @@ export function Marketplace() {
         </motion.div>
         <motion.div className="mt-12" variants={itemVariants}>
           <Button size="lg" asChild>
-            <a href="/marketplace">
+            <a href="/dashboard/marketplace">
               Visit Marketplace <ArrowRight className="ml-2 h-5 w-5" />
             </a>
           </Button>

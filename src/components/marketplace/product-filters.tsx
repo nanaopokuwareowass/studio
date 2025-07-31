@@ -1,10 +1,28 @@
 
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 
-export function ProductFilters() {
+type ProductFiltersProps = {
+  selectedCategories: string[];
+  onCategoryChange: (category: string) => void;
+  selectedBrands: string[];
+  onBrandChange: (brand: string) => void;
+  priceRange: number[];
+  onPriceChange: (value: number[]) => void;
+};
+
+
+export function ProductFilters({
+  selectedCategories,
+  onCategoryChange,
+  selectedBrands,
+  onBrandChange,
+  priceRange,
+  onPriceChange
+}: ProductFiltersProps) {
   const categories = ["Cleaners", "Waxes & Polishes", "Tools & Accessories", "Interior Care", "Tire & Wheel Care"];
   const brands = ["Chemical Guys", "Meguiar's", "Adam's Polishes", "Griot's Garage", "Turtle Wax"];
 
@@ -19,7 +37,11 @@ export function ProductFilters() {
           <div className="space-y-3">
             {categories.map(category => (
               <div key={category} className="flex items-center space-x-2">
-                <Checkbox id={`cat-${category}`} />
+                <Checkbox 
+                  id={`cat-${category}`} 
+                  checked={selectedCategories.includes(category)}
+                  onCheckedChange={() => onCategoryChange(category)}
+                />
                 <Label htmlFor={`cat-${category}`} className="font-normal">{category}</Label>
               </div>
             ))}
@@ -32,10 +54,12 @@ export function ProductFilters() {
             max={100}
             step={1}
             className="w-full"
+            value={priceRange}
+            onValueChange={onPriceChange}
           />
            <div className="flex justify-between text-sm text-muted-foreground mt-2">
-            <span>$0</span>
-            <span>$100+</span>
+            <span>${priceRange[0]}</span>
+            <span>${priceRange[1] === 100 ? '100+' : priceRange[1]}</span>
           </div>
         </div>
         <div>
@@ -43,7 +67,11 @@ export function ProductFilters() {
            <div className="space-y-3">
             {brands.map(brand => (
               <div key={brand} className="flex items-center space-x-2">
-                <Checkbox id={`brand-${brand}`} />
+                <Checkbox 
+                  id={`brand-${brand}`} 
+                  checked={selectedBrands.includes(brand)}
+                  onCheckedChange={() => onBrandChange(brand)}
+                />
                 <Label htmlFor={`brand-${brand}`} className="font-normal">{brand}</Label>
               </div>
             ))}
