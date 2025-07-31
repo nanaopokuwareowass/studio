@@ -9,7 +9,7 @@ import { CalendarIcon, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -32,6 +32,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar"
 import { useToast } from "@/hooks/use-toast"
 import Image from "next/image"
+import { geocodeCoordinates } from "@/ai/flows/geocode-flow"
+import React from "react"
 
 
 const formSchema = z.object({
@@ -47,6 +49,7 @@ const formSchema = z.object({
 
 export function Hero() {
   const { toast } = useToast()
+  const [isGeocoding, setIsGeocoding] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,16 +71,30 @@ export function Hero() {
   
   const handleGetLocation = () => {
     if (navigator.geolocation) {
+      setIsGeocoding(true);
+      toast({
+        title: "Fetching Location...",
+        description: "Please wait while we retrieve your coordinates.",
+      });
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
-          // You can use a geocoding service to get the address from lat/lng
-          // For now, we'll just set the input to the coordinates
-          form.setValue("location", `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`);
-          toast({
-            title: "Location Captured!",
-            description: "Your current location has been set.",
-          });
+          try {
+            const result = await geocodeCoordinates({ latitude, longitude });
+            form.setValue("location", result.address);
+            toast({
+              title: "Location Captured!",
+              description: "Your address has been set.",
+            });
+          } catch(e) {
+             toast({
+              variant: "destructive",
+              title: "Geocoding Error",
+              description: "Could not convert coordinates to address. Please enter it manually.",
+            });
+          } finally {
+            setIsGeocoding(false);
+          }
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -86,6 +103,7 @@ export function Hero() {
             title: "Location Error",
             description: "Could not retrieve your location. Please enter it manually.",
           });
+          setIsGeocoding(false);
         }
       );
     } else {
@@ -207,6 +225,7 @@ export function Hero() {
                                 size="icon"
                                 className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
                                 onClick={handleGetLocation}
+                                disabled={isGeocoding}
                               >
                                 <MapPin className="h-5 w-5 text-muted-foreground" />
                                 <span className="sr-only">Use current location</span>
