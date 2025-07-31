@@ -79,12 +79,15 @@ export function UserManagement() {
 
   const filteredUsers = usersData.filter(user => {
     if (activeTab === 'all') return true;
-    return user.role.toLowerCase() === activeTab;
+    if (activeTab === 'customers') return user.role === 'Customer';
+    if (activeTab === 'crew') return user.role === 'Crew';
+    if (activeTab === 'staff') return user.role === 'Admin' || user.role === 'Staff';
+    return true;
   });
 
   return (
     <div className="grid flex-1 items-start gap-4">
-        <Tabs defaultValue="all" onValueChange={setActiveTab}>
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
           <div className="flex items-center">
             <TabsList>
               <TabsTrigger value="all">All Users</TabsTrigger>
@@ -115,67 +118,69 @@ export function UserManagement() {
                 </div>
               </CardHeader>
               <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>User</TableHead>
-                      <TableHead className="hidden md:table-cell">Role</TableHead>
-                      <TableHead className="hidden md:table-cell">Joined Date</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>
-                        <span className="sr-only">Actions</span>
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredUsers.map((user) => (
-                      <TableRow key={user.id}>
-                        <TableCell>
-                            <div className="flex items-center gap-3">
-                                <Avatar className="h-9 w-9">
-                                    <AvatarImage src={user.avatar} alt={user.name} data-ai-hint="person avatar"/>
-                                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                    <div className="font-medium">{user.name}</div>
-                                    <div className="text-sm text-muted-foreground">{user.email}</div>
+                <div className="overflow-x-auto">
+                    <Table>
+                    <TableHeader>
+                        <TableRow>
+                        <TableHead>User</TableHead>
+                        <TableHead className="hidden md:table-cell">Role</TableHead>
+                        <TableHead className="hidden md:table-cell">Joined Date</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>
+                            <span className="sr-only">Actions</span>
+                        </TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {filteredUsers.map((user) => (
+                        <TableRow key={user.id}>
+                            <TableCell>
+                                <div className="flex items-center gap-3">
+                                    <Avatar className="h-9 w-9">
+                                        <AvatarImage src={user.avatar} alt={user.name} data-ai-hint="person avatar"/>
+                                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div>
+                                        <div className="font-medium">{user.name}</div>
+                                        <div className="text-sm text-muted-foreground">{user.email}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </TableCell>
-                         <TableCell className="hidden md:table-cell">
-                          <Badge variant={getRoleBadgeVariant(user.role)}>{user.role}</Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          {new Date(user.joined).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={getStatusBadgeVariant(user.status)}>{user.status}</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MoreHorizontal className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuItem>View Profile</DropdownMenuItem>
-                              <DropdownMenuItem>Edit User</DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-destructive">Delete User</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                            <Badge variant={getRoleBadgeVariant(user.role)}>{user.role}</Badge>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                            {new Date(user.joined).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                            <Badge variant={getStatusBadgeVariant(user.status)}>{user.status}</Badge>
+                            </TableCell>
+                            <TableCell>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                <Button
+                                    aria-haspopup="true"
+                                    size="icon"
+                                    variant="ghost"
+                                >
+                                    <MoreHorizontal className="h-4 w-4" />
+                                    <span className="sr-only">Toggle menu</span>
+                                </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>View Profile</DropdownMenuItem>
+                                <DropdownMenuItem>Edit User</DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="text-destructive">Delete User</DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                            </TableCell>
+                        </TableRow>
+                        ))}
+                    </TableBody>
+                    </Table>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

@@ -39,12 +39,12 @@ export function PaymentManagement() {
 
   return (
     <Card>
-      <CardHeader className="flex-row items-center justify-between">
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <CardTitle>Payment Management</CardTitle>
           <CardDescription>Track and manage all transactions.</CardDescription>
         </div>
-        <Button variant="outline" className="gap-2">
+        <Button variant="outline" className="gap-2 w-full sm:w-auto">
             <File className="h-4 w-4" />
             Export
         </Button>
@@ -69,57 +69,59 @@ export function PaymentManagement() {
           </div>
           <TabsContent value={activeTab}>
             <div className="mt-4 rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Customer</TableHead>
-                    <TableHead className="hidden md:table-cell">Booking ID</TableHead>
-                    <TableHead className="hidden sm:table-cell">Date</TableHead>
-                    <TableHead className="hidden md:table-cell">Method</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    <TableHead><span className="sr-only">Actions</span></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredPayments.map((payment) => (
-                    <TableRow key={payment.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar className="h-9 w-9">
-                            <AvatarImage src={payment.customer.avatar} alt={payment.customer.name} data-ai-hint="person avatar" />
-                            <AvatarFallback>{payment.customer.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <div className="font-medium">{payment.customer.name}</div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell text-muted-foreground">{payment.bookingId}</TableCell>
-                      <TableCell className="hidden sm:table-cell text-muted-foreground">{payment.date}</TableCell>
-                      <TableCell className="hidden md:table-cell">{payment.method}</TableCell>
-                      <TableCell className="text-right font-medium">${payment.amount.toFixed(2)}</TableCell>
-                      <TableCell className="text-center">
-                        <Badge variant={getStatusVariant(payment.status)}>{payment.status}</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem>View Booking</DropdownMenuItem>
-                            <DropdownMenuItem>Send Reminder</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Mark as Paid</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Customer</TableHead>
+                        <TableHead className="hidden md:table-cell">Booking ID</TableHead>
+                        <TableHead className="hidden sm:table-cell">Date</TableHead>
+                        <TableHead className="hidden md:table-cell">Method</TableHead>
+                        <TableHead className="text-right">Amount</TableHead>
+                        <TableHead className="text-center">Status</TableHead>
+                        <TableHead><span className="sr-only">Actions</span></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredPayments.map((payment) => (
+                        <TableRow key={payment.id}>
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              <Avatar className="h-9 w-9">
+                                <AvatarImage src={payment.customer.avatar} alt={payment.customer.name} data-ai-hint="person avatar" />
+                                <AvatarFallback>{payment.customer.name.charAt(0)}</AvatarFallback>
+                              </Avatar>
+                              <div className="font-medium">{payment.customer.name}</div>
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell text-muted-foreground">{payment.bookingId}</TableCell>
+                          <TableCell className="hidden sm:table-cell text-muted-foreground">{payment.date}</TableCell>
+                          <TableCell className="hidden md:table-cell">{payment.method}</TableCell>
+                          <TableCell className="text-right font-medium">${payment.amount.toFixed(2)}</TableCell>
+                          <TableCell className="text-center">
+                            <Badge variant={getStatusVariant(payment.status)}>{payment.status}</Badge>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="h-8 w-8 p-0">
+                                  <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>View Booking</DropdownMenuItem>
+                                <DropdownMenuItem>Send Reminder</DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>Mark as Paid</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
             </div>
           </TabsContent>
         </Tabs>

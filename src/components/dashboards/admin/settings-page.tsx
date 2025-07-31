@@ -48,7 +48,7 @@ export function SettingsPage() {
                 <Label htmlFor="logo">Company Logo</Label>
                 <div className="flex items-center gap-4">
                     <div className="relative h-16 w-16 rounded-md border p-1">
-                        <Image src="/logo-placeholder.svg" fill alt="Current Logo" className="object-contain" data-ai-hint="company logo"/>
+                        <Image src="https://placehold.co/100x100.png" fill alt="Current Logo" className="object-contain" data-ai-hint="company logo"/>
                     </div>
                     <Input id="logo" type="file" className="max-w-xs" />
                 </div>
@@ -135,8 +135,8 @@ export function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="flex items-center justify-between rounded-lg border p-4">
-                    <div>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
+                    <div className="mb-4 sm:mb-0">
                         <h3 className="font-medium">Customer Notifications</h3>
                         <p className="text-sm text-muted-foreground">Booking confirmations, reminders, etc.</p>
                     </div>
@@ -145,8 +145,8 @@ export function SettingsPage() {
                         <Label htmlFor="sms-customer" className="flex items-center gap-2 cursor-pointer"><Switch id="sms-customer" /> SMS</Label>
                     </div>
                 </div>
-                <div className="flex items-center justify-between rounded-lg border p-4">
-                    <div>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
+                    <div className="mb-4 sm:mb-0">
                         <h3 className="font-medium">Admin Notifications</h3>
                         <p className="text-sm text-muted-foreground">New bookings, cancellations, etc.</p>
                     </div>
@@ -171,9 +171,9 @@ export function SettingsPage() {
                 </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <div className="flex items-start gap-6 rounded-lg border p-4">
+                    <div className="flex flex-col sm:flex-row items-start gap-6 rounded-lg border p-4">
                         <div className="relative h-12 w-24">
-                           <Image src="/stripe-logo.svg" fill alt="Stripe" className="object-contain" data-ai-hint="Stripe logo"/>
+                           <Image src="https://placehold.co/120x48.png" fill alt="Stripe" className="object-contain" data-ai-hint="Stripe logo"/>
                         </div>
                         <div className="flex-grow">
                             <h3 className="font-semibold text-lg">Stripe</h3>
@@ -188,9 +188,9 @@ export function SettingsPage() {
                              <Label htmlFor="stripe-switch">Enable</Label>
                         </div>
                     </div>
-                     <div className="flex items-start gap-6 rounded-lg border p-4">
+                     <div className="flex flex-col sm:flex-row items-start gap-6 rounded-lg border p-4">
                         <div className="relative h-12 w-24">
-                           <Image src="/paystack-logo.svg" fill alt="Paystack" className="object-contain" data-ai-hint="Paystack logo"/>
+                           <Image src="https://placehold.co/120x48.png" fill alt="Paystack" className="object-contain" data-ai-hint="Paystack logo"/>
                         </div>
                         <div className="flex-grow">
                             <h3 className="font-semibold text-lg">Paystack</h3>

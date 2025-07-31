@@ -15,6 +15,8 @@ import {
 import { ProductGrid } from "@/components/marketplace/product-grid";
 import { ProductFilters } from "@/components/marketplace/product-filters";
 import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Filter } from "lucide-react";
 
 export function Marketplace() {
   const [filters, setFilters] = useState({
@@ -66,6 +68,23 @@ export function Marketplace() {
               className="pl-10 w-full md:w-64"
             />
           </div>
+           <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="lg:hidden">
+                    <Filter className="mr-2 h-4 w-4" /> Filters
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                  <ProductFilters 
+                    selectedCategories={filters.categories}
+                    onCategoryChange={handleCategoryChange}
+                    selectedBrands={filters.brands}
+                    onBrandChange={handleBrandChange}
+                    priceRange={filters.priceRange}
+                    onPriceChange={handlePriceChange}
+                  />
+              </SheetContent>
+            </Sheet>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="lg" className="gap-2">

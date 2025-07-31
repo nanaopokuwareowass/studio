@@ -56,13 +56,13 @@ export function ServiceManagement() {
             <CardDescription>
                 Add, edit, and manage the services your business offers.
             </CardDescription>
-             <div className="flex items-center gap-2 pt-2">
-                <div className="relative flex-1">
+             <div className="flex flex-col sm:flex-row items-center gap-2 pt-2">
+                <div className="relative flex-1 w-full">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input placeholder="Search services..." className="pl-10 w-full md:w-80" />
+                    <Input placeholder="Search services..." className="pl-10 w-full" />
                 </div>
-                <div className="ml-auto flex items-center gap-2">
-                    <Button size="sm" variant="outline" className="h-8 gap-1">
+                <div className="ml-auto flex items-center gap-2 w-full sm:w-auto">
+                    <Button size="sm" variant="outline" className="h-8 gap-1 w-full sm:w-auto">
                         <File className="h-3.5 w-3.5" />
                         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                         Export
@@ -73,58 +73,60 @@ export function ServiceManagement() {
             </div>
             </CardHeader>
             <CardContent>
-            <Table>
-                <TableHeader>
-                <TableRow>
-                    <TableHead>Service Name</TableHead>
-                    <TableHead className="hidden md:table-cell">Description</TableHead>
-                    <TableHead className="hidden md:table-cell">Price</TableHead>
-                    <TableHead className="hidden md:table-cell">Duration (min)</TableHead>
-                    <TableHead>
-                    <span className="sr-only">Actions</span>
-                    </TableHead>
-                </TableRow>
-                </TableHeader>
-                <TableBody>
-                {servicesData.map((service) => (
-                    <TableRow key={service.id}>
-                    <TableCell className="font-medium">
-                        {service.name}
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell text-muted-foreground">
-                        {service.description}
-                    </TableCell>
-                     <TableCell className="hidden md:table-cell">
-                        ${service.price.toFixed(2)}
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                        {service.duration}
-                    </TableCell>
-                    <TableCell>
-                        <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                            aria-haspopup="true"
-                            size="icon"
-                            variant="ghost"
-                            >
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Toggle menu</span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem>Disable</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                        </DropdownMenu>
-                    </TableCell>
+             <div className="overflow-x-auto">
+                <Table>
+                    <TableHeader>
+                    <TableRow>
+                        <TableHead>Service Name</TableHead>
+                        <TableHead className="hidden md:table-cell">Description</TableHead>
+                        <TableHead className="hidden sm:table-cell">Price</TableHead>
+                        <TableHead className="hidden sm:table-cell">Duration (min)</TableHead>
+                        <TableHead>
+                        <span className="sr-only">Actions</span>
+                        </TableHead>
                     </TableRow>
-                ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody>
+                    {servicesData.map((service) => (
+                        <TableRow key={service.id}>
+                        <TableCell className="font-medium">
+                            {service.name}
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell text-muted-foreground">
+                            {service.description}
+                        </TableCell>
+                         <TableCell className="hidden sm:table-cell">
+                            ${service.price.toFixed(2)}
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">
+                            {service.duration}
+                        </TableCell>
+                        <TableCell>
+                            <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                aria-haspopup="true"
+                                size="icon"
+                                variant="ghost"
+                                >
+                                <MoreHorizontal className="h-4 w-4" />
+                                <span className="sr-only">Toggle menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>Edit</DropdownMenuItem>
+                                <DropdownMenuItem>Disable</DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                            </DropdownMenuContent>
+                            </DropdownMenu>
+                        </TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+            </div>
             </CardContent>
         </Card>
     </div>

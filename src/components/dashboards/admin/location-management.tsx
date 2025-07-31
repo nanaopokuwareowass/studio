@@ -121,7 +121,7 @@ export function LocationManagement() {
                 </CardContent>
             </Card>
 
-            <Card className="lg:col-span-2 h-[60vh] lg:h-full overflow-hidden">
+            <Card className="lg:col-span-2 h-[60vh] lg:h-[calc(100vh-10rem)] overflow-hidden">
                 <div className="relative w-full h-full">
                     {/* Placeholder for map integration */}
                     <Image

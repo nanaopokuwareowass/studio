@@ -2,7 +2,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Cell, Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { File, MoreVertical, Users, Car, MapPin, DollarSign, Wrench, Package, ShoppingCart, Percent } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -47,14 +47,14 @@ const COLORS = ["hsl(var(--primary))", "#16a34a", "#f97316", "#6366f1"];
 export function AnalyticsReports() {
     return (
         <div className="space-y-8">
-             <div className="flex items-center justify-between">
+             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Analytics & Reports</h1>
                     <p className="text-muted-foreground">
                         Deep dive into your business performance.
                     </p>
                 </div>
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2 w-full sm:w-auto">
                     <File className="h-4 w-4"/>
                     Export All Reports
                 </Button>
@@ -231,9 +231,9 @@ export function AnalyticsReports() {
                         <CardContent className="flex items-center justify-center">
                             <ResponsiveContainer width="100%" height={300}>
                                <PieChart>
-                                    <Pie data={salesByCategoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="hsl(var(--primary))" label>
+                                    <Pie data={salesByCategoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
                                         {salesByCategoryData.map((entry, index) => (
-                                            <div key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                         ))}
                                     </Pie>
                                     <Tooltip />

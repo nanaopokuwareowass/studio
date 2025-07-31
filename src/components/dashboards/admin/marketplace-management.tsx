@@ -145,75 +145,77 @@ export function MarketplaceManagement() {
                 </div>
               </CardHeader>
               <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="hidden w-[100px] sm:table-cell">
-                        <span className="sr-only">Image</span>
-                      </TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="hidden md:table-cell">
-                        Price
-                      </TableHead>
-                      <TableHead className="hidden md:table-cell">
-                        Stock
-                      </TableHead>
-                      <TableHead>
-                        <span className="sr-only">Actions</span>
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {productsData.map((product) => (
-                      <TableRow key={product.id}>
-                        <TableCell className="hidden sm:table-cell">
-                           <div className="relative h-16 w-16">
-                                <Image
-                                src={product.image}
-                                alt={product.name}
-                                fill
-                                className="rounded-md object-cover"
-                                data-ai-hint="product image"
-                                />
-                           </div>
-                        </TableCell>
-                        <TableCell className="font-medium">
-                            <div className="font-medium">{product.name}</div>
-                            <div className="text-sm text-muted-foreground">{product.category}</div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={getStatusBadgeVariant(product.status)}>{product.status}</Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          ${product.price.toFixed(2)}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          {product.stock}
-                        </TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MoreHorizontal className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuItem>Edit</DropdownMenuItem>
-                              <DropdownMenuItem>Delete</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                 <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="hidden w-[100px] sm:table-cell">
+                            <span className="sr-only">Image</span>
+                          </TableHead>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead className="hidden md:table-cell">
+                            Price
+                          </TableHead>
+                          <TableHead className="hidden md:table-cell">
+                            Stock
+                          </TableHead>
+                          <TableHead>
+                            <span className="sr-only">Actions</span>
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {productsData.map((product) => (
+                          <TableRow key={product.id}>
+                            <TableCell className="hidden sm:table-cell">
+                               <div className="relative h-16 w-16">
+                                    <Image
+                                    src={product.image}
+                                    alt={product.name}
+                                    fill
+                                    className="rounded-md object-cover"
+                                    data-ai-hint="product image"
+                                    />
+                               </div>
+                            </TableCell>
+                            <TableCell className="font-medium">
+                                <div className="font-medium">{product.name}</div>
+                                <div className="text-sm text-muted-foreground">{product.category}</div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant={getStatusBadgeVariant(product.status)}>{product.status}</Badge>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              ${product.price.toFixed(2)}
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              {product.stock}
+                            </TableCell>
+                            <TableCell>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button
+                                    aria-haspopup="true"
+                                    size="icon"
+                                    variant="ghost"
+                                  >
+                                    <MoreHorizontal className="h-4 w-4" />
+                                    <span className="sr-only">Toggle menu</span>
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                  <DropdownMenuItem>Edit</DropdownMenuItem>
+                                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                </div>
               </CardContent>
               <CardFooter>
                 <div className="text-xs text-muted-foreground">

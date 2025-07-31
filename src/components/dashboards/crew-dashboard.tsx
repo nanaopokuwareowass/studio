@@ -104,49 +104,54 @@ export function CrewDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
-            <CardHeader>
-                <CardTitle>Assigned Washes</CardTitle>
-                <CardDescription>Details of your upcoming and recent jobs.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                        <TableHead>Customer & Vehicle</TableHead>
-                        <TableHead>Service</TableHead>
-                        <TableHead>Time</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {assignedWashes.map((wash) => (
-                             <TableRow key={wash.bookingId} className={wash.status === 'Completed' ? 'opacity-60' : ''}>
-                                <TableCell>
-                                    <div className="font-medium">{wash.customer}</div>
-                                    <div className="text-sm text-muted-foreground">{wash.vehicle} - {wash.location}</div>
-                                </TableCell>
-                                <TableCell>{wash.service}</TableCell>
-                                <TableCell>{new Date(wash.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</TableCell>
-                                <TableCell className="text-right">
-                                    {wash.status === 'Upcoming' ? (
-                                        <div className="flex gap-2 justify-end">
-                                            <JobDetailsDialog wash={wash} />
-                                            <Button size="sm" onClick={() => handleNavigate(wash.location)} variant="outline">
-                                                <Navigation className="mr-2 h-4 w-4" />
-                                                Navigate
-                                            </Button>
-                                        </div>
-                                    ) : (
-                                         <Badge variant="secondary">Completed</Badge>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
+        <div className="lg:col-span-2">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Assigned Washes</CardTitle>
+                    <CardDescription>Details of your upcoming and recent jobs.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="overflow-x-auto">
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                <TableHead>Customer & Vehicle</TableHead>
+                                <TableHead className="hidden sm:table-cell">Service</TableHead>
+                                <TableHead className="hidden sm:table-cell">Time</TableHead>
+                                <TableHead className="text-right">Actions</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {assignedWashes.map((wash) => (
+                                    <TableRow key={wash.bookingId} className={wash.status === 'Completed' ? 'opacity-60' : ''}>
+                                        <TableCell>
+                                            <div className="font-medium">{wash.customer}</div>
+                                            <div className="text-sm text-muted-foreground">{wash.vehicle}</div>
+                                            <div className="text-sm text-muted-foreground sm:hidden mt-1">{wash.location}</div>
+                                        </TableCell>
+                                        <TableCell className="hidden sm:table-cell">{wash.service}</TableCell>
+                                        <TableCell className="hidden sm:table-cell">{new Date(wash.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</TableCell>
+                                        <TableCell className="text-right">
+                                            {wash.status === 'Upcoming' ? (
+                                                <div className="flex gap-2 justify-end">
+                                                    <JobDetailsDialog wash={wash} />
+                                                    <Button size="sm" onClick={() => handleNavigate(wash.location)} variant="outline" className="hidden sm:flex">
+                                                        <Navigation className="mr-2 h-4 w-4" />
+                                                        Navigate
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <Badge variant="secondary">Completed</Badge>
+                                            )}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
         <Card>
             <CardHeader>
                 <CardTitle>My Schedule</CardTitle>
@@ -182,7 +187,7 @@ function JobDetailsDialog({ wash }: { wash: Wash }) {
                         Log photos and notes for the job for {wash.customer}.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="space-y-6 py-4">
+                <div className="space-y-6 py-4 max-h-[60vh] overflow-y-auto pr-4">
                      <div className="space-y-4">
                         <h4 className="font-semibold flex items-center gap-2"><Camera className="h-5 w-5" /> Job Photos</h4>
                         <div className="grid grid-cols-2 gap-4">
@@ -207,7 +212,7 @@ function JobDetailsDialog({ wash }: { wash: Wash }) {
                         <Textarea placeholder="e.g., Noticed a scratch on the rear bumper..." />
                     </div>
                 </div>
-                <DialogFooter className="sm:justify-between">
+                <DialogFooter className="flex-col-reverse sm:flex-row sm:justify-between gap-2">
                     <Button variant="outline">Mark as Completed</Button>
                     <Button>Start Wash</Button>
                 </DialogFooter>
