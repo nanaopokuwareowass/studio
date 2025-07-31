@@ -6,7 +6,8 @@ import {
   File,
   PlusCircle,
   MoreHorizontal,
-  Search
+  Search,
+  DropdownMenuSeparator,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
