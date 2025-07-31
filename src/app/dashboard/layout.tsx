@@ -10,14 +10,8 @@ import Link from "next/link";
 import React from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <SidebarProvider>
-      <Sidebar>
+const MainSidebarContent = () => (
+    <>
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
             <Car className="h-8 w-8 text-primary" />
@@ -165,6 +159,18 @@ export default function DashboardLayout({
                 </SidebarMenuItem>
             </SidebarMenu>
         </SidebarFooter>
+    </>
+);
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <MainSidebarContent />
       </Sidebar>
       <SidebarInset>
         <header className="flex h-16 items-center justify-between p-4 bg-background border-b">
@@ -214,22 +220,8 @@ export default function DashboardLayout({
                             <span className="sr-only">Toggle navigation menu</span>
                         </Button>
                     </SheetTrigger>
-                    <SheetContent side="left">
-                        <SheetHeader>
-                            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                            <SheetDescription className="sr-only">
-                                Main navigation links for the dashboard.
-                            </SheetDescription>
-                        </SheetHeader>
-                        <div className="p-4">
-                            {/* Mobile navigation content goes here */}
-                            <nav className="grid gap-4">
-                                <Link href="/dashboard" className="text-sm font-medium">Dashboard</Link>
-                                <Link href="/dashboard/bookings" className="text-sm font-medium">My Bookings</Link>
-                                <Link href="/dashboard/marketplace" className="text-sm font-medium">Marketplace</Link>
-                                {/* Add other mobile links as needed */}
-                            </nav>
-                        </div>
+                    <SheetContent side="left" className="p-0 flex flex-col">
+                      <MainSidebarContent />
                     </SheetContent>
                 </Sheet>
            </div>
