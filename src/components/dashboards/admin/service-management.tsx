@@ -29,6 +29,14 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 const servicesData = [
   { id: "SRV-001", name: "Exterior Wash", description: "A thorough wash of the car's exterior.", price: 35.00, duration: 45 },
