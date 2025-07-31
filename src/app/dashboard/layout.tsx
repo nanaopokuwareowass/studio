@@ -169,13 +169,12 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar className="hidden md:flex md:flex-col">
         <MainSidebarContent />
       </Sidebar>
       <SidebarInset>
         <header className="flex h-16 items-center justify-between p-4 bg-background border-b">
            <div className="flex items-center gap-4">
-            <SidebarTrigger className="md:hidden" />
             <h1 className="text-xl font-semibold hidden md:block">Welcome Back!</h1>
            </div>
            <div className="flex items-center gap-4">
@@ -220,7 +219,7 @@ export default function DashboardLayout({
                             <span className="sr-only">Toggle navigation menu</span>
                         </Button>
                     </SheetTrigger>
-                    <SheetContent side="left" className="p-0 flex flex-col">
+                    <SheetContent side="left" className="p-0 flex flex-col w-[300px] sm:w-[340px]">
                       <MainSidebarContent />
                     </SheetContent>
                 </Sheet>
