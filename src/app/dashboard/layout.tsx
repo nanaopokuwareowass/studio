@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
-import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu, Wrench, CreditCard, BarChart3 } from "lucide-react";
+import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu, Wrench, CreditCard, BarChart3, Heart, Home, BellRing, History } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -20,17 +20,16 @@ const MainSidebarContent = () => (
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-             <SidebarMenuItem>
-                <Link href="/dashboard" passHref>
-                  <SidebarMenuButton>
-                      <LayoutGrid />
-                      <span>Dashboard</span>
-                  </SidebarMenuButton>
-                </Link>
-            </SidebarMenuItem>
-
             <SidebarGroup>
                 <SidebarGroupLabel>Customer</SidebarGroupLabel>
+                <SidebarMenuItem>
+                    <Link href="/dashboard" passHref>
+                        <SidebarMenuButton>
+                            <Home />
+                            <span>Dashboard</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
                 <SidebarMenuItem>
                     <Link href="/dashboard/my-bookings" passHref>
                         <SidebarMenuButton>
@@ -39,11 +38,43 @@ const MainSidebarContent = () => (
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
+                 <SidebarMenuItem>
+                    <Link href="/dashboard/my-vehicles" passHref>
+                        <SidebarMenuButton>
+                            <Car />
+                            <span>My Vehicles</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                    <Link href="/dashboard/payment-history" passHref>
+                        <SidebarMenuButton>
+                            <History />
+                            <span>Payment History</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
                 <SidebarMenuItem>
                     <Link href="/dashboard/marketplace" passHref>
                         <SidebarMenuButton>
                             <Store />
                             <span>Marketplace</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
+                 <SidebarMenuItem>
+                    <Link href="/dashboard/notifications" passHref>
+                        <SidebarMenuButton>
+                            <BellRing />
+                            <span>Notifications</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
+                 <SidebarMenuItem>
+                    <Link href="/dashboard/settings" passHref>
+                        <SidebarMenuButton>
+                            <Settings />
+                            <span>Settings</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
