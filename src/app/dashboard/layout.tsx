@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
-import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart } from "lucide-react";
+import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -45,7 +45,7 @@ export default function DashboardLayout({
                 <SidebarMenuItem>
                     <Link href="/dashboard/marketplace" asChild>
                         <SidebarMenuButton>
-                            <ShoppingBag />
+                            <Store />
                             <span>Marketplace</span>
                         </SidebarMenuButton>
                     </Link>
@@ -99,10 +99,10 @@ export default function DashboardLayout({
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <Link href="#" asChild>
+                    <Link href="/dashboard/admin/marketplace" asChild>
                         <SidebarMenuButton>
-                            <Settings />
-                            <span>Service Management</span>
+                            <Store />
+                            <span>Marketplace Management</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
@@ -189,10 +189,10 @@ export default function DashboardLayout({
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
-                           <a href="/">
+                           <Link href="/">
                              <LogOut className="mr-2 h-4 w-4"/>
                              <span>Logout</span>
-                           </a>
+                           </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
