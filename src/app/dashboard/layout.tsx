@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
-import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu } from "lucide-react";
+import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu, Wrench } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -80,7 +80,7 @@ const MainSidebarContent = () => (
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                     <Link href="#" passHref>
+                     <Link href="/dashboard/admin/users" passHref>
                         <SidebarMenuButton>
                             <Users />
                             <span>User Management</span>
@@ -92,6 +92,14 @@ const MainSidebarContent = () => (
                         <SidebarMenuButton>
                             <Truck />
                             <span>Bookings Management</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                    <Link href="/dashboard/admin/services" passHref>
+                        <SidebarMenuButton>
+                            <Wrench />
+                            <span>Service Management</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
@@ -175,7 +183,8 @@ export default function DashboardLayout({
       <SidebarInset>
         <header className="flex h-16 items-center justify-between p-4 bg-background border-b">
            <div className="flex items-center gap-4">
-            <h1 className="text-xl font-semibold hidden md:block">Welcome Back!</h1>
+                <SidebarTrigger className="md:hidden" />
+                <h1 className="text-xl font-semibold hidden md:block">Welcome Back!</h1>
            </div>
            <div className="flex items-center gap-4">
                 <Button variant="ghost" size="icon">
