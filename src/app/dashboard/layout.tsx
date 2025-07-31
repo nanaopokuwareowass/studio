@@ -47,13 +47,13 @@ export default function DashboardLayout({
             <SidebarGroup>
                 <SidebarGroupLabel>Crew</SidebarGroupLabel>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="#">
+                    <SidebarMenuButton href="/dashboard/crew">
                         <Briefcase />
                         <span>Assigned Washes</span>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="#">
+                    <SidebarMenuButton href="/dashboard/crew">
                         <Calendar />
                         <span>My Schedule</span>
                     </SidebarMenuButton>
