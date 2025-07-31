@@ -238,7 +238,6 @@ export default function DashboardLayout({
       <SidebarInset>
         <header className="flex h-16 items-center justify-between p-4 bg-background border-b">
            <div className="flex items-center gap-4">
-                <SidebarTrigger className="md:hidden" />
                 <h1 className="text-xl font-semibold hidden md:block">Welcome Back!</h1>
            </div>
            <div className="flex items-center gap-4">
