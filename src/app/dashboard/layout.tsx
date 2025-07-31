@@ -75,7 +75,7 @@ export default function DashboardLayout({
                     </SidebarMenuButton>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="#">
+                    <SidebarMenuButton href="/dashboard/bookings">
                         <Truck />
                         <span>Bookings Management</span>
                     </SidebarMenuButton>
