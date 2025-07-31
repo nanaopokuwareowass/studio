@@ -135,6 +135,14 @@ const MainSidebarContent = () => (
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
+                 <SidebarMenuItem>
+                    <Link href="/dashboard/admin/settings" passHref>
+                        <SidebarMenuButton>
+                            <Settings />
+                            <span>Settings</span>
+                        </SidebarMenuButton>
+                    </Link>
+                </SidebarMenuItem>
             </SidebarGroup>
           </SidebarMenu>
         </SidebarContent>
@@ -146,14 +154,6 @@ const MainSidebarContent = () => (
                         <SidebarMenuButton>
                             <LifeBuoy />
                             <span>Support</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                    <Link href="#" passHref>
-                        <SidebarMenuButton>
-                            <Settings />
-                            <span>Settings</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
