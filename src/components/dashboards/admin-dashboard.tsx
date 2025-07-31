@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { DollarSign, Users, Car, Activity } from "lucide-react";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, Line, LineChart } from "recharts";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
@@ -69,15 +69,15 @@ export function AdminDashboard() {
   }, [])
     
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8">
       <div className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Admin Dashboard</h1>
         <p className="text-muted-foreground">
           A complete overview of your business operations and performance.
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 md:gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
@@ -120,7 +120,7 @@ export function AdminDashboard() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8">
         <Card>
             <CardHeader>
                 <CardTitle>Revenue Overview</CardTitle>
@@ -164,51 +164,52 @@ export function AdminDashboard() {
                 <CardDescription>A list of the most recent bookings.</CardDescription>
             </CardHeader>
             <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                        <TableHead>Customer</TableHead>
-                        <TableHead>Service</TableHead>
-                        <TableHead className="text-right">Amount</TableHead>
-                        <TableHead className="text-right">Status</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {recentBookings.map((booking) => (
-                             <TableRow key={booking.bookingId}>
-                                <TableCell>
-                                    <div className="flex items-center gap-3">
-                                        <Avatar className="h-8 w-8">
-                                            <AvatarImage src={booking.customer.avatar} alt={booking.customer.name} data-ai-hint="person avatar"/>
-                                            <AvatarFallback>{booking.customer.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <div className="font-medium">{booking.customer.name}</div>
-                                            <div className="text-sm text-muted-foreground">{new Date(booking.date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'})}</div>
-                                        </div>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    {booking.service}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    ${booking.amount.toFixed(2)}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                     <Badge 
-                                        variant={booking.status === 'Completed' ? 'secondary' : booking.status === 'Upcoming' ? 'default' : 'outline'}
-                                    >
-                                        {booking.status}
-                                    </Badge>
-                                </TableCell>
+                <div className="overflow-auto">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                            <TableHead>Customer</TableHead>
+                            <TableHead className="hidden sm:table-cell">Service</TableHead>
+                            <TableHead className="hidden sm:table-cell text-right">Amount</TableHead>
+                            <TableHead className="text-right">Status</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {recentBookings.map((booking) => (
+                                <TableRow key={booking.bookingId}>
+                                    <TableCell>
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="h-8 w-8">
+                                                <AvatarImage src={booking.customer.avatar} alt={booking.customer.name} data-ai-hint="person avatar"/>
+                                                <AvatarFallback>{booking.customer.name.charAt(0)}</AvatarFallback>
+                                            </Avatar>
+                                            <div>
+                                                <div className="font-medium">{booking.customer.name}</div>
+                                                <div className="text-sm text-muted-foreground md:hidden">{new Date(booking.date).toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}</div>
+                                            </div>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell className="hidden sm:table-cell">
+                                        {booking.service}
+                                    </TableCell>
+                                    <TableCell className="hidden sm:table-cell text-right">
+                                        ${booking.amount.toFixed(2)}
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <Badge 
+                                            variant={booking.status === 'Completed' ? 'secondary' : booking.status === 'Upcoming' ? 'default' : 'outline'}
+                                        >
+                                            {booking.status}
+                                        </Badge>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
             </CardContent>
         </Card>
       </div>
     </div>
   );
 }
-

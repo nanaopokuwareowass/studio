@@ -27,10 +27,10 @@ export default function DashboardLayout({
           <SidebarMenu>
              <SidebarMenuItem>
                 <Link href="/dashboard">
-                    <SidebarMenuButton>
-                        <LayoutGrid />
-                        <span>Dashboard</span>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                      <LayoutGrid />
+                      <span>Dashboard</span>
+                  </SidebarMenuButton>
                 </Link>
             </SidebarMenuItem>
 
@@ -208,7 +208,7 @@ export default function DashboardLayout({
                 </DropdownMenu>
            </div>
         </header>
-        <main className="flex-1 p-6 bg-secondary/40">
+        <main className="flex-1 p-4 md:p-6 bg-secondary/40">
             {children}
         </main>
       </SidebarInset>

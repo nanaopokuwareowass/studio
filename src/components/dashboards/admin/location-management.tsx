@@ -58,8 +58,8 @@ const agentsOnDuty = [
 
 export function LocationManagement() {
     return (
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 h-[calc(100vh-12rem)]">
-            <Card className="xl:col-span-1 h-full flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+            <Card className="lg:col-span-1 h-[calc(100vh-10rem)] flex flex-col">
                 <CardHeader>
                     <CardTitle>Live Operations</CardTitle>
                     <CardDescription>
@@ -121,7 +121,7 @@ export function LocationManagement() {
                 </CardContent>
             </Card>
 
-            <Card className="xl:col-span-2 h-full overflow-hidden">
+            <Card className="lg:col-span-2 h-[60vh] lg:h-full overflow-hidden">
                 <div className="relative w-full h-full">
                     {/* Placeholder for map integration */}
                     <Image

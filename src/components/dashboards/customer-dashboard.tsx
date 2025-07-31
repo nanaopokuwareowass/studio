@@ -51,6 +51,8 @@ export function CustomerDashboard() {
   const [monthlySpending, setMonthlySpending] = useState<any[]>([]);
   
   useEffect(() => {
+    // In a real app, you'd fetch this data.
+    // Using a function to generate random data to avoid hydration mismatch.
     setMonthlySpending([
       { month: "Jan", total: Math.floor(Math.random() * 200) + 50 },
       { month: "Feb", total: Math.floor(Math.random() * 200) + 50 },
@@ -62,26 +64,26 @@ export function CustomerDashboard() {
   }, []);
 
   return (
-    <div className="space-y-8">
-       <div className="flex items-center justify-between">
+    <div className="space-y-6 md:space-y-8">
+       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="space-y-1">
-            <h1 className="text-3xl font-bold tracking-tight">Customer Dashboard</h1>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Customer Dashboard</h1>
             <p className="text-muted-foreground">
                 An overview of your account and recent activities.
             </p>
         </div>
-        <div className="flex items-center gap-4">
-            <Button variant="outline">
+        <div className="flex items-center gap-2 md:gap-4 w-full md:w-auto">
+            <Button variant="outline" className="w-full md:w-auto">
                 <Package className="mr-2 h-4 w-4" />
                 Browse Marketplace
             </Button>
-            <Button>
+            <Button className="w-full md:w-auto">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Book a New Wash
             </Button>
         </div>
       </div>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
@@ -121,7 +123,7 @@ export function CustomerDashboard() {
           </CardContent>
         </Card>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
         <Card className="lg:col-span-3">
             <CardHeader>
                 <CardTitle>Monthly Spending</CardTitle>
@@ -163,31 +165,33 @@ export function CustomerDashboard() {
                 <CardDescription>A log of your recent bookings and purchases.</CardDescription>
             </CardHeader>
             <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                        <TableHead>Description</TableHead>
-                        <TableHead className="text-right">Status</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {recentActivities.map((activity) => (
-                             <TableRow key={activity.id}>
-                                <TableCell>
-                                <div className="font-medium">{activity.type}</div>
-                                <div className="text-sm text-muted-foreground">{new Date(activity.date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'})}</div>
-                                </TableCell>
-                                <TableCell className="text-right">
-                                     <Badge 
-                                        variant={activity.status === 'Completed' || activity.status === 'Delivered' ? 'secondary' : activity.status === 'Upcoming' ? 'default' : 'outline'}
-                                    >
-                                        {activity.status}
-                                    </Badge>
-                                </TableCell>
+                <div className="overflow-auto">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                            <TableHead>Description</TableHead>
+                            <TableHead className="text-right">Status</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {recentActivities.map((activity) => (
+                                <TableRow key={activity.id}>
+                                    <TableCell>
+                                    <div className="font-medium">{activity.type}</div>
+                                    <div className="text-sm text-muted-foreground">{new Date(activity.date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'})}</div>
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <Badge 
+                                            variant={activity.status === 'Completed' || activity.status === 'Delivered' ? 'secondary' : activity.status === 'Upcoming' ? 'default' : 'outline'}
+                                        >
+                                            {activity.status}
+                                        </Badge>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
             </CardContent>
         </Card>
       </div>
