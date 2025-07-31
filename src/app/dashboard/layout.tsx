@@ -24,8 +24,8 @@ export default function DashboardLayout({
         <SidebarContent>
           <SidebarMenu>
              <SidebarMenuItem>
-                <Link href="/dashboard" asChild>
-                    <SidebarMenuButton isActive>
+                <Link href="/dashboard">
+                    <SidebarMenuButton>
                         <LayoutGrid />
                         <span>Dashboard</span>
                     </SidebarMenuButton>
@@ -35,7 +35,7 @@ export default function DashboardLayout({
             <SidebarGroup>
                 <SidebarGroupLabel>Customer</SidebarGroupLabel>
                 <SidebarMenuItem>
-                    <Link href="/dashboard" asChild>
+                    <Link href="/dashboard">
                         <SidebarMenuButton>
                             <ShoppingBag />
                             <span>My Bookings</span>
@@ -43,7 +43,7 @@ export default function DashboardLayout({
                     </Link>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="/dashboard/marketplace" asChild>
+                    <Link href="/dashboard/marketplace">
                         <SidebarMenuButton>
                             <Store />
                             <span>Marketplace</span>
@@ -55,7 +55,7 @@ export default function DashboardLayout({
             <SidebarGroup>
                 <SidebarGroupLabel>Crew</SidebarGroupLabel>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/crew" asChild>
+                    <Link href="/dashboard/crew">
                         <SidebarMenuButton>
                             <Briefcase />
                             <span>Assigned Washes</span>
@@ -63,7 +63,7 @@ export default function DashboardLayout({
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/crew" asChild>
+                    <Link href="/dashboard/crew">
                         <SidebarMenuButton>
                             <Calendar />
                             <span>My Schedule</span>
@@ -75,7 +75,7 @@ export default function DashboardLayout({
             <SidebarGroup>
                 <SidebarGroupLabel>Admin</SidebarGroupLabel>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/admin" asChild>
+                    <Link href="/dashboard/admin">
                         <SidebarMenuButton>
                             <LineChart />
                             <span>Admin Dashboard</span>
@@ -83,7 +83,7 @@ export default function DashboardLayout({
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                     <Link href="#" asChild>
+                     <Link href="#">
                         <SidebarMenuButton>
                             <Users />
                             <span>User Management</span>
@@ -91,7 +91,7 @@ export default function DashboardLayout({
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/bookings" asChild>
+                    <Link href="/dashboard/bookings">
                         <SidebarMenuButton>
                             <Truck />
                             <span>Bookings Management</span>
@@ -99,7 +99,7 @@ export default function DashboardLayout({
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/admin/marketplace" asChild>
+                    <Link href="/dashboard/admin/marketplace">
                         <SidebarMenuButton>
                             <Store />
                             <span>Marketplace Management</span>
@@ -113,7 +113,7 @@ export default function DashboardLayout({
         <SidebarFooter>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <Link href="#" asChild>
+                    <Link href="#">
                         <SidebarMenuButton>
                             <LifeBuoy />
                             <span>Support</span>
@@ -121,7 +121,7 @@ export default function DashboardLayout({
                     </Link>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="#" asChild>
+                    <Link href="#">
                         <SidebarMenuButton>
                             <Settings />
                             <span>Settings</span>
