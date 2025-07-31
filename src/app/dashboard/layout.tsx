@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
 import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart } from "lucide-react";
 import Link from "next/link";
+import React from "react";
 
 export default function DashboardLayout({
   children,
@@ -23,8 +24,8 @@ export default function DashboardLayout({
         <SidebarContent>
           <SidebarMenu>
              <SidebarMenuItem>
-                <Link href="/dashboard" passHref>
-                    <SidebarMenuButton asChild isActive>
+                <Link href="/dashboard" asChild>
+                    <SidebarMenuButton isActive>
                         <LayoutGrid />
                         <span>Dashboard</span>
                     </SidebarMenuButton>
@@ -34,16 +35,16 @@ export default function DashboardLayout({
             <SidebarGroup>
                 <SidebarGroupLabel>Customer</SidebarGroupLabel>
                 <SidebarMenuItem>
-                    <Link href="/dashboard" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="/dashboard" asChild>
+                        <SidebarMenuButton>
                             <ShoppingBag />
                             <span>My Bookings</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="/dashboard/marketplace" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="/dashboard/marketplace" asChild>
+                        <SidebarMenuButton>
                             <ShoppingBag />
                             <span>Marketplace</span>
                         </SidebarMenuButton>
@@ -54,16 +55,16 @@ export default function DashboardLayout({
             <SidebarGroup>
                 <SidebarGroupLabel>Crew</SidebarGroupLabel>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/crew" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="/dashboard/crew" asChild>
+                        <SidebarMenuButton>
                             <Briefcase />
                             <span>Assigned Washes</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/crew" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="/dashboard/crew" asChild>
+                        <SidebarMenuButton>
                             <Calendar />
                             <span>My Schedule</span>
                         </SidebarMenuButton>
@@ -74,32 +75,32 @@ export default function DashboardLayout({
             <SidebarGroup>
                 <SidebarGroupLabel>Admin</SidebarGroupLabel>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/admin" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="/dashboard/admin" asChild>
+                        <SidebarMenuButton>
                             <LineChart />
                             <span>Admin Dashboard</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                     <Link href="#" passHref>
-                        <SidebarMenuButton asChild>
+                     <Link href="#" asChild>
+                        <SidebarMenuButton>
                             <Users />
                             <span>User Management</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <Link href="/dashboard/bookings" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="/dashboard/bookings" asChild>
+                        <SidebarMenuButton>
                             <Truck />
                             <span>Bookings Management</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <Link href="#" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="#" asChild>
+                        <SidebarMenuButton>
                             <Settings />
                             <span>Service Management</span>
                         </SidebarMenuButton>
@@ -112,16 +113,16 @@ export default function DashboardLayout({
         <SidebarFooter>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <Link href="#" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="#" asChild>
+                        <SidebarMenuButton>
                             <LifeBuoy />
                             <span>Support</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="#" passHref>
-                        <SidebarMenuButton asChild>
+                    <Link href="#" asChild>
+                        <SidebarMenuButton>
                             <Settings />
                             <span>Settings</span>
                         </SidebarMenuButton>
@@ -130,12 +131,7 @@ export default function DashboardLayout({
                  <SidebarMenuItem>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                             <div className="group/menu-item relative">
-                                <button
-                                data-sidebar="menu-button"
-                                data-size="default"
-                                className="peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0"
-                                >
+                             <SidebarMenuButton>
                                 <Avatar className="h-7 w-7">
                                     <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="person avatar" />
                                     <AvatarFallback>U</AvatarFallback>
@@ -144,8 +140,7 @@ export default function DashboardLayout({
                                     <span>User</span>
                                     <span className="text-xs text-muted-foreground">user@email.com</span>
                                 </span>
-                                </button>
-                            </div>
+                            </SidebarMenuButton>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent side="right" align="start">
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
