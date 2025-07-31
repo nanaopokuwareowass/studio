@@ -15,6 +15,8 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts"
 import { useEffect, useState } from "react";
+import { BookWashModal } from "./book-wash-modal";
+import Link from "next/link";
 
 const recentActivities = [
     {
@@ -73,14 +75,13 @@ export function CustomerDashboard() {
             </p>
         </div>
         <div className="flex items-center gap-2 md:gap-4 w-full md:w-auto">
-            <Button variant="outline" className="w-full md:w-auto">
-                <Package className="mr-2 h-4 w-4" />
-                Browse Marketplace
+            <Button variant="outline" className="w-full md:w-auto" asChild>
+                <Link href="/dashboard/marketplace">
+                    <Package className="mr-2 h-4 w-4" />
+                    Browse Marketplace
+                </Link>
             </Button>
-            <Button className="w-full md:w-auto">
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Book a New Wash
-            </Button>
+            <BookWashModal />
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6">

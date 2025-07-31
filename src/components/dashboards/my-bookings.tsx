@@ -25,6 +25,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { BookWashModal } from "./book-wash-modal"
 
 const bookingsData = [
   {
@@ -88,10 +89,7 @@ export function MyBookings() {
             View and manage your car wash appointments.
             </CardDescription>
         </div>
-         <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Book a New Wash
-        </Button>
+         <BookWashModal />
       </CardHeader>
       <CardContent className="space-y-4">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
