@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
 import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardLayout({
   children,
@@ -22,69 +23,87 @@ export default function DashboardLayout({
         <SidebarContent>
           <SidebarMenu>
              <SidebarMenuItem>
-              <SidebarMenuButton href="/dashboard" isActive>
-                <LayoutGrid />
-                <span>Dashboard</span>
-              </SidebarMenuButton>
+                <Link href="/dashboard" passHref>
+                    <SidebarMenuButton asChild isActive>
+                        <LayoutGrid />
+                        <span>Dashboard</span>
+                    </SidebarMenuButton>
+                </Link>
             </SidebarMenuItem>
 
             <SidebarGroup>
                 <SidebarGroupLabel>Customer</SidebarGroupLabel>
                 <SidebarMenuItem>
-                <SidebarMenuButton href="#">
-                    <ShoppingBag />
-                    <span>My Bookings</span>
-                </SidebarMenuButton>
+                    <Link href="/dashboard" passHref>
+                        <SidebarMenuButton asChild>
+                            <ShoppingBag />
+                            <span>My Bookings</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                <SidebarMenuButton href="/dashboard/marketplace">
-                    <ShoppingBag />
-                    <span>Marketplace</span>
-                </SidebarMenuButton>
+                    <Link href="/dashboard/marketplace" passHref>
+                        <SidebarMenuButton asChild>
+                            <ShoppingBag />
+                            <span>Marketplace</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
             </SidebarGroup>
 
             <SidebarGroup>
                 <SidebarGroupLabel>Crew</SidebarGroupLabel>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="/dashboard/crew">
-                        <Briefcase />
-                        <span>Assigned Washes</span>
-                    </SidebarMenuButton>
+                    <Link href="/dashboard/crew" passHref>
+                        <SidebarMenuButton asChild>
+                            <Briefcase />
+                            <span>Assigned Washes</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="/dashboard/crew">
-                        <Calendar />
-                        <span>My Schedule</span>
-                    </SidebarMenuButton>
+                    <Link href="/dashboard/crew" passHref>
+                        <SidebarMenuButton asChild>
+                            <Calendar />
+                            <span>My Schedule</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
             </SidebarGroup>
 
             <SidebarGroup>
                 <SidebarGroupLabel>Admin</SidebarGroupLabel>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="/dashboard/admin">
-                        <LineChart />
-                        <span>Admin Dashboard</span>
-                    </SidebarMenuButton>
+                    <Link href="/dashboard/admin" passHref>
+                        <SidebarMenuButton asChild>
+                            <LineChart />
+                            <span>Admin Dashboard</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="#">
-                        <Users />
-                        <span>User Management</span>
-                    </SidebarMenuButton>
+                     <Link href="#" passHref>
+                        <SidebarMenuButton asChild>
+                            <Users />
+                            <span>User Management</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="/dashboard/bookings">
-                        <Truck />
-                        <span>Bookings Management</span>
-                    </SidebarMenuButton>
+                    <Link href="/dashboard/bookings" passHref>
+                        <SidebarMenuButton asChild>
+                            <Truck />
+                            <span>Bookings Management</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
-                    <SidebarMenuButton href="#">
-                        <Settings />
-                        <span>Service Management</span>
-                    </SidebarMenuButton>
+                    <Link href="#" passHref>
+                        <SidebarMenuButton asChild>
+                            <Settings />
+                            <span>Service Management</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
             </SidebarGroup>
           </SidebarMenu>
@@ -93,16 +112,20 @@ export default function DashboardLayout({
         <SidebarFooter>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton href="#">
-                        <LifeBuoy />
-                        <span>Support</span>
-                    </SidebarMenuButton>
+                    <Link href="#" passHref>
+                        <SidebarMenuButton asChild>
+                            <LifeBuoy />
+                            <span>Support</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton href="#">
-                        <Settings />
-                        <span>Settings</span>
-                    </SidebarMenuButton>
+                    <Link href="#" passHref>
+                        <SidebarMenuButton asChild>
+                            <Settings />
+                            <span>Settings</span>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarMenuItem>
                  <SidebarMenuItem>
                     <DropdownMenu>
