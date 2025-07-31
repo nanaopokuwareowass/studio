@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon, CheckCircle, Clock } from "lucide-react";
+import { Calendar as CalendarIcon, CheckCircle, Clock, Navigation, FilePlus, Camera, StickyNote } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -15,6 +15,11 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
+import { Input } from "../ui/input";
 
 const assignedWashes = [
     {
@@ -46,8 +51,15 @@ const assignedWashes = [
     },
 ];
 
+type Wash = typeof assignedWashes[0];
+
 export function CrewDashboard() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+
+  const handleNavigate = (location: string) => {
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+    window.open(googleMapsUrl, "_blank");
+  }
 
   return (
     <div className="space-y-8">
@@ -119,8 +131,11 @@ export function CrewDashboard() {
                                 <TableCell className="text-right">
                                     {wash.status === 'Upcoming' ? (
                                         <div className="flex gap-2 justify-end">
-                                            <Button variant="outline" size="sm">View Details</Button>
-                                            <Button size="sm">Start Wash</Button>
+                                            <JobDetailsDialog wash={wash} />
+                                            <Button size="sm" onClick={() => handleNavigate(wash.location)} variant="outline">
+                                                <Navigation className="mr-2 h-4 w-4" />
+                                                Navigate
+                                            </Button>
                                         </div>
                                     ) : (
                                          <Badge variant="secondary">Completed</Badge>
@@ -151,4 +166,52 @@ export function CrewDashboard() {
       </div>
     </div>
   );
+}
+
+
+function JobDetailsDialog({ wash }: { wash: Wash }) {
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="outline" size="sm">View Details</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                    <DialogTitle>Job Details: {wash.bookingId}</DialogTitle>
+                    <DialogDescription>
+                        Log photos and notes for the job for {wash.customer}.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-6 py-4">
+                     <div className="space-y-4">
+                        <h4 className="font-semibold flex items-center gap-2"><Camera className="h-5 w-5" /> Job Photos</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="before-photo">Before Photo</Label>
+                                <div className="h-32 rounded-md border-2 border-dashed flex items-center justify-center bg-muted">
+                                    <FilePlus className="h-8 w-8 text-muted-foreground" />
+                                </div>
+                                <Input id="before-photo" type="file" className="text-xs"/>
+                            </div>
+                             <div className="space-y-2">
+                                <Label htmlFor="after-photo">After Photo</Label>
+                                <div className="h-32 rounded-md border-2 border-dashed flex items-center justify-center bg-muted">
+                                    <FilePlus className="h-8 w-8 text-muted-foreground" />
+                                </div>
+                                <Input id="after-photo" type="file" className="text-xs" />
+                            </div>
+                        </div>
+                    </div>
+                     <div className="space-y-2">
+                        <h4 className="font-semibold flex items-center gap-2"><StickyNote className="h-5 w-5" /> Job Notes</h4>
+                        <Textarea placeholder="e.g., Noticed a scratch on the rear bumper..." />
+                    </div>
+                </div>
+                <DialogFooter className="sm:justify-between">
+                    <Button variant="outline">Mark as Completed</Button>
+                    <Button>Start Wash</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
 }
