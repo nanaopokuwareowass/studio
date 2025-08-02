@@ -51,7 +51,7 @@ export function Header() {const [isScrolled, setIsScrolled] = React.useState(fal
       <a className="text-sm font-medium" href="/#how-it-works">How it Works</a>
       <a className="text-sm font-medium" href="/marketplace">Marketplace</a>
       <a className="text-sm font-medium" href="/#faq">FAQs</a>
-       <a className="text-sm font-medium" href="/#contact">Book Now</a>
+       <a className="text-sm font-medium" href="/login">Book Now</a>
     </>
   );
 
@@ -76,7 +76,7 @@ export function Header() {const [isScrolled, setIsScrolled] = React.useState(fal
         </nav>
         <div className="hidden md:flex items-center gap-4 ml-auto">
            <Button asChild>
-            <a href="/#contact">Book Now</a>
+            <a href="/login">Book Now</a>
           </Button>
           <Button variant={isHeroSection && !isScrolled ? "outline-white" : "outline"} asChild>
             <a href="/login">Login</a>
