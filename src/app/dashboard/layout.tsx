@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -31,7 +32,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard" passHref>
                       <SidebarMenuButton tooltip="Dashboard">
                           <Home />
-                          <span>Dashboard</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Dashboard</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -39,7 +40,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/my-bookings" passHref>
                       <SidebarMenuButton tooltip="My Bookings">
                           <Briefcase />
-                          <span>My Bookings</span>
+                          <span className="group-data-[collapsible=icon]:hidden">My Bookings</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -47,7 +48,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/my-vehicles" passHref>
                       <SidebarMenuButton tooltip="My Vehicles">
                           <Truck />
-                          <span>My Vehicles</span>
+                          <span className="group-data-[collapsible=icon]:hidden">My Vehicles</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -55,7 +56,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/payment-history" passHref>
                       <SidebarMenuButton tooltip="Payment History">
                           <History />
-                          <span>Payment History</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Payment History</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -63,7 +64,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/marketplace" passHref>
                       <SidebarMenuButton tooltip="Marketplace">
                           <Store />
-                          <span>Marketplace</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Marketplace</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -71,7 +72,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/notifications" passHref>
                       <SidebarMenuButton tooltip="Notifications">
                           <BellRing />
-                          <span>Notifications</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Notifications</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -79,7 +80,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/settings" passHref>
                       <SidebarMenuButton tooltip="Settings">
                           <Settings />
-                          <span>Settings</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Settings</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -93,7 +94,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/crew" passHref>
                       <SidebarMenuButton tooltip="Assigned Washes">
                           <Briefcase />
-                          <span>Assigned Washes</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Assigned Washes</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -101,7 +102,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/crew" passHref>
                       <SidebarMenuButton tooltip="My Schedule">
                           <Calendar />
-                          <span>My Schedule</span>
+                          <span className="group-data-[collapsible=icon]:hidden">My Schedule</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -109,7 +110,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/crew/pos" passHref>
                       <SidebarMenuButton tooltip="POS">
                           <Tablet />
-                          <span>POS</span>
+                          <span className="group-data-[collapsible=icon]:hidden">POS</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -122,7 +123,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/admin" passHref>
                       <SidebarMenuButton tooltip="Overview">
                           <LineChart />
-                          <span>Overview</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Overview</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -130,7 +131,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/admin/reports" passHref>
                       <SidebarMenuButton tooltip="Analytics">
                           <BarChart3 />
-                          <span>Analytics</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Analytics</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -138,7 +139,7 @@ const MainSidebarContent = () => (
                     <Link href="/dashboard/admin/users" passHref>
                       <SidebarMenuButton tooltip="User Management">
                           <Users />
-                          <span>User Management</span>
+                          <span className="group-data-[collapsible=icon]:hidden">User Management</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -146,7 +147,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/bookings" passHref>
                       <SidebarMenuButton tooltip="Bookings Management">
                           <Briefcase />
-                          <span>Bookings Management</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Bookings Management</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -154,7 +155,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/admin/services" passHref>
                       <SidebarMenuButton tooltip="Service Management">
                           <Wrench />
-                          <span>Service Management</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Service Management</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -162,7 +163,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/admin/marketplace" passHref>
                       <SidebarMenuButton tooltip="Marketplace Management">
                           <Store />
-                          <span>Marketplace Management</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Marketplace Management</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -170,7 +171,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/admin/location" passHref>
                       <SidebarMenuButton tooltip="Location Management">
                           <Map />
-                          <span>Location Management</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Location Management</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -178,7 +179,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/admin/payments" passHref>
                       <SidebarMenuButton tooltip="Payment Management">
                           <CreditCard />
-                          <span>Payment Management</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Payment Management</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -186,7 +187,7 @@ const MainSidebarContent = () => (
                   <Link href="/dashboard/admin/settings" passHref>
                       <SidebarMenuButton tooltip="Settings">
                           <Settings />
-                          <span>Settings</span>
+                          <span className="group-data-[collapsible=icon]:hidden">Settings</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
@@ -200,7 +201,7 @@ const MainSidebarContent = () => (
                     <Link href="#" passHref>
                         <SidebarMenuButton tooltip="Support">
                             <LifeBuoy />
-                            <span>Support</span>
+                            <span className="group-data-[collapsible=icon]:hidden">Support</span>
                         </SidebarMenuButton>
                     </Link>
                 </SidebarMenuItem>
@@ -244,7 +245,7 @@ export default function DashboardLayout({
         <MainSidebarContent />
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-16 items-center justify-between p-4 bg-background border-b">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between p-4 bg-background border-b">
            <div className="flex items-center gap-4">
                 <SidebarTrigger className="hidden md:flex" />
                 <h1 className="text-xl font-semibold hidden md:block">Welcome Back!</h1>
