@@ -71,17 +71,18 @@ export function Pricing() {
             Choose the perfect plan for your vehicle. No hidden fees, ever.
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
-          {pricingTiers.map((tier) => (
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-16 max-w-5xl mx-auto">
+          {pricingTiers.map((tier, index) => (
             <motion.div
               key={tier.name}
               variants={itemVariants}
               whileHover={{ y: -8 }}
               transition={{ type: "spring", stiffness: 300 }}
+              className={`w-full md:w-1/3 ${tier.popular ? 'md:scale-105 z-10' : 'md:mx-[-1rem] z-0'}`}
             >
-              <Card className={`h-full flex flex-col ${tier.popular ? "border-primary shadow-lg" : "shadow-sm"}`}>
+              <Card className={`h-full flex flex-col ${tier.popular ? "border-2 border-primary shadow-2xl" : "shadow-sm"}`}>
                 <CardHeader className="relative">
-                  <CardTitle>{tier.name}</CardTitle>
+                  <CardTitle className="text-2xl">{tier.name}</CardTitle>
                   <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-bold">{tier.price}</span>
                     <span className="text-muted-foreground">/ wash</span>
