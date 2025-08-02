@@ -12,6 +12,7 @@ import { Faq } from "@/components/landing/faq";
 import { Join } from "@/components/landing/join";
 import { Contact } from "@/components/landing/contact";
 import { Footer } from "@/components/landing/footer";
+import { Pricing } from "@/components/landing/pricing";
 
 export default function LandingPage() {
   return (
@@ -22,8 +23,10 @@ export default function LandingPage() {
         <About />
         <AutoDetailing />
         <HowItWorks />
-        <Marketplace /><Benefits />
+        <Marketplace />
+        <Benefits />
         <Services />
+        <Pricing />
         <Testimonials />
         <Faq />
         <Join />
