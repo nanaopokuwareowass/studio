@@ -25,174 +25,169 @@ const MainSidebarContent = () => (
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            <SidebarGroup>
-                <SidebarGroupLabel>Customer</SidebarGroupLabel>
+              <SidebarMenuItem>
+                  <Link href="/dashboard" passHref>
+                      <SidebarMenuButton>
+                          <Home />
+                          <span>Dashboard</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                  <Link href="/dashboard/my-bookings" passHref>
+                      <SidebarMenuButton>
+                          <Briefcase />
+                          <span>My Bookings</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="/dashboard" passHref>
-                        <SidebarMenuButton>
-                            <Home />
-                            <span>Dashboard</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
+                  <Link href="/dashboard/my-vehicles" passHref>
+                      <SidebarMenuButton>
+                          <Image
+                            src="/images/logo.svg"
+                            alt="Vehicle Icon"width={28}
+                            height={28}
+                            className="w-7 h-7"
+                          />
+                          <span>My Vehicles</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                  <Link href="/dashboard/payment-history" passHref>
+                      <SidebarMenuButton>
+                          <History />
+                          <span>Payment History</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                  <Link href="/dashboard/marketplace" passHref>
+                      <SidebarMenuButton>
+                          <Store />
+                          <span>Marketplace</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="/dashboard/my-bookings" passHref>
-                        <SidebarMenuButton>
-                            <Briefcase />
-                            <span>My Bookings</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/my-vehicles" passHref>
-                        <SidebarMenuButton>
-                            <Image
-                              src="/images/logo.svg"
-                              alt="Vehicle Icon"width={28}
-                              height={28}
-                              className="w-7 h-7"
-                            />
-                            <span>My Vehicles</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
+                  <Link href="/dashboard/notifications" passHref>
+                      <SidebarMenuButton>
+                          <BellRing />
+                          <span>Notifications</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="/dashboard/payment-history" passHref>
-                        <SidebarMenuButton>
-                            <History />
-                            <span>Payment History</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                    <Link href="/dashboard/marketplace" passHref>
-                        <SidebarMenuButton>
-                            <Store />
-                            <span>Marketplace</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/notifications" passHref>
-                        <SidebarMenuButton>
-                            <BellRing />
-                            <span>Notifications</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/settings" passHref>
-                        <SidebarMenuButton>
-                            <Settings />
-                            <span>Settings</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-            </SidebarGroup>
+                  <Link href="/dashboard/settings" passHref>
+                      <SidebarMenuButton>
+                          <Settings />
+                          <span>Settings</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
 
-            <SidebarGroup>
-                <SidebarGroupLabel>Crew</SidebarGroupLabel>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/crew" passHref>
-                        <SidebarMenuButton>
-                            <Briefcase />
-                            <span>Assigned Washes</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/crew" passHref>
-                        <SidebarMenuButton>
-                            <Calendar />
-                            <span>My Schedule</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/crew/pos" passHref>
-                        <SidebarMenuButton>
-                            <Tablet />
-                            <span>POS</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-            </SidebarGroup>
+              <SidebarSeparator />
 
-            <SidebarGroup>
-                <SidebarGroupLabel>Admin</SidebarGroupLabel>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/admin" passHref>
-                        <SidebarMenuButton>
-                            <LineChart />
-                            <span>Overview</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/admin/reports" passHref>
-                        <SidebarMenuButton>
-                            <BarChart3 />
-                            <span>Analytics</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                     <Link href="/dashboard/admin/users" passHref>
-                        <SidebarMenuButton>
-                            <Users />
-                            <span>User Management</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/bookings" passHref>
-                        <SidebarMenuButton>
-                            <Truck />
-                            <span>Bookings Management</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
+              <SidebarMenuItem>
+                  <Link href="/dashboard/crew" passHref>
+                      <SidebarMenuButton>
+                          <Briefcase />
+                          <span>Assigned Washes</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="/dashboard/admin/services" passHref>
-                        <SidebarMenuButton>
-                            <Wrench />
-                            <span>Service Management</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/admin/marketplace" passHref>
-                        <SidebarMenuButton>
-                            <Store />
-                            <span>Marketplace Management</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/admin/location" passHref>
-                        <SidebarMenuButton>
-                            <Map />
-                            <span>Location Management</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
+                  <Link href="/dashboard/crew" passHref>
+                      <SidebarMenuButton>
+                          <Calendar />
+                          <span>My Schedule</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <Link href="/dashboard/admin/payments" passHref>
-                        <SidebarMenuButton>
-                            <CreditCard />
-                            <span>Payment Management</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <Link href="/dashboard/admin/settings" passHref>
-                        <SidebarMenuButton>
-                            <Settings />
-                            <span>Settings</span>
-                        </SidebarMenuButton>
-                    </Link>
-                </SidebarMenuItem>
-            </SidebarGroup>
+                  <Link href="/dashboard/crew/pos" passHref>
+                      <SidebarMenuButton>
+                          <Tablet />
+                          <span>POS</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+
+            <SidebarSeparator />
+
+              <SidebarMenuItem>
+                  <Link href="/dashboard/admin" passHref>
+                      <SidebarMenuButton>
+                          <LineChart />
+                          <span>Overview</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <Link href="/dashboard/admin/reports" passHref>
+                      <SidebarMenuButton>
+                          <BarChart3 />
+                          <span>Analytics</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+                <SidebarMenuItem>
+                    <Link href="/dashboard/admin/users" passHref>
+                      <SidebarMenuButton>
+                          <Users />
+                          <span>User Management</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <Link href="/dashboard/bookings" passHref>
+                      <SidebarMenuButton>
+                          <Truck />
+                          <span>Bookings Management</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                  <Link href="/dashboard/admin/services" passHref>
+                      <SidebarMenuButton>
+                          <Wrench />
+                          <span>Service Management</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <Link href="/dashboard/admin/marketplace" passHref>
+                      <SidebarMenuButton>
+                          <Store />
+                          <span>Marketplace Management</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <Link href="/dashboard/admin/location" passHref>
+                      <SidebarMenuButton>
+                          <Map />
+                          <span>Location Management</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                  <Link href="/dashboard/admin/payments" passHref>
+                      <SidebarMenuButton>
+                          <CreditCard />
+                          <span>Payment Management</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <Link href="/dashboard/admin/settings" passHref>
+                      <SidebarMenuButton>
+                          <Settings />
+                          <span>Settings</span>
+                      </SidebarMenuButton>
+                  </Link>
+              </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
         <SidebarSeparator />
