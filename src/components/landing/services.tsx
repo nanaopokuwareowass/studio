@@ -10,13 +10,25 @@ export function Services() {
       title: "Headlight Restoration",
       description: "Restore clarity and brightness to your headlights, improving both safety and appearance.",
       image: "/images/headlight-clean.jpg",
-      price: "From $49.99"
+      hint: "headlight car"
     },
     {
       title: "Interior Detailing",
       description: "Complete interior cleaning and conditioning, bringing new life to your car's cabin.",
       image: "/images/interior-clean.jpg",
-      price: "From $89.99"
+      hint: "car interior"
+    },
+    {
+      title: "Engine Wash",
+      description: "A safe and thorough clean for your engine bay, removing grease and grime.",
+      image: "https://placehold.co/600x400.png",
+      hint: "car engine"
+    },
+    {
+      title: "Wax & Polish",
+      description: "Protect your paint and give it a brilliant shine with our premium wax and polish.",
+      image: "https://placehold.co/600x400.png",
+      hint: "car wax"
     }
   ];
 
@@ -63,6 +75,7 @@ export function Services() {
                   src={service.image}
                   alt={service.title}
                   fill
+                  data-ai-hint={service.hint}
                   className="object-cover transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
                 />
               </div>
@@ -71,11 +84,12 @@ export function Services() {
                 <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
                 <p className="text-muted-foreground mb-4">{service.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-semibold text-primary">{service.price}</span>
-                  <Button variant="outline" className="group relative overflow-hidden">
-                    <span className="relative z-10">Book Now</span>
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1 relative z-10" />
-                    <div className="absolute inset-0 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                  <Button asChild variant="outline" className="group/button overflow-hidden bg-transparent">
+                      <a href="#home">
+                        <span className="relative z-10 transition-colors duration-300 group-hover/button:text-white">Book Now</span>
+                        <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/button:translate-x-1 relative z-10 group-hover/button:text-white" />
+                        <div className="absolute inset-0 bg-primary transform scale-x-0 group-hover/button:scale-x-100 transition-transform duration-300 origin-left" />
+                      </a>
                   </Button>
                 </div>
               </div>
