@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
-import { Bell, Briefcase, Calendar, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu, Wrench, CreditCard, BarChart3, Heart, Home, BellRing, History, Tablet } from "lucide-react";
+import { Bell, Briefcase, Calendar, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu, Wrench, CreditCard, BarChart3, Heart, Home, BellRing, History, Tablet, PanelLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -25,9 +25,11 @@ const MainSidebarContent = () => (
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-              <SidebarMenuItem>
+            <SidebarGroup>
+                <SidebarGroupLabel>Customer</SidebarGroupLabel>
+                 <SidebarMenuItem>
                   <Link href="/dashboard" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Dashboard">
                           <Home />
                           <span>Dashboard</span>
                       </SidebarMenuButton>
@@ -35,7 +37,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
               <SidebarMenuItem>
                   <Link href="/dashboard/my-bookings" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="My Bookings">
                           <Briefcase />
                           <span>My Bookings</span>
                       </SidebarMenuButton>
@@ -43,20 +45,15 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/my-vehicles" passHref>
-                      <SidebarMenuButton>
-                          <Image
-                            src="/images/logo.svg"
-                            alt="Vehicle Icon"width={28}
-                            height={28}
-                            className="w-7 h-7"
-                          />
+                      <SidebarMenuButton tooltip="My Vehicles">
+                          <Truck />
                           <span>My Vehicles</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
                   <Link href="/dashboard/payment-history" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Payment History">
                           <History />
                           <span>Payment History</span>
                       </SidebarMenuButton>
@@ -64,7 +61,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
               <SidebarMenuItem>
                   <Link href="/dashboard/marketplace" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Marketplace">
                           <Store />
                           <span>Marketplace</span>
                       </SidebarMenuButton>
@@ -72,7 +69,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/notifications" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Notifications">
                           <BellRing />
                           <span>Notifications</span>
                       </SidebarMenuButton>
@@ -80,18 +77,21 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/settings" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Settings">
                           <Settings />
                           <span>Settings</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
+            </SidebarGroup>
 
               <SidebarSeparator />
 
-              <SidebarMenuItem>
+            <SidebarGroup>
+                <SidebarGroupLabel>Crew</SidebarGroupLabel>
+                 <SidebarMenuItem>
                   <Link href="/dashboard/crew" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Assigned Washes">
                           <Briefcase />
                           <span>Assigned Washes</span>
                       </SidebarMenuButton>
@@ -99,7 +99,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/crew" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="My Schedule">
                           <Calendar />
                           <span>My Schedule</span>
                       </SidebarMenuButton>
@@ -107,18 +107,20 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/crew/pos" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="POS">
                           <Tablet />
                           <span>POS</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
+            </SidebarGroup>
 
             <SidebarSeparator />
-
-              <SidebarMenuItem>
+            <SidebarGroup>
+                <SidebarGroupLabel>Admin</SidebarGroupLabel>
+                 <SidebarMenuItem>
                   <Link href="/dashboard/admin" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Overview">
                           <LineChart />
                           <span>Overview</span>
                       </SidebarMenuButton>
@@ -126,7 +128,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/admin/reports" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Analytics">
                           <BarChart3 />
                           <span>Analytics</span>
                       </SidebarMenuButton>
@@ -134,7 +136,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                     <Link href="/dashboard/admin/users" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="User Management">
                           <Users />
                           <span>User Management</span>
                       </SidebarMenuButton>
@@ -142,15 +144,15 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/bookings" passHref>
-                      <SidebarMenuButton>
-                          <Truck />
+                      <SidebarMenuButton tooltip="Bookings Management">
+                          <Briefcase />
                           <span>Bookings Management</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
                   <Link href="/dashboard/admin/services" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Service Management">
                           <Wrench />
                           <span>Service Management</span>
                       </SidebarMenuButton>
@@ -158,7 +160,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/admin/marketplace" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Marketplace Management">
                           <Store />
                           <span>Marketplace Management</span>
                       </SidebarMenuButton>
@@ -166,7 +168,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/admin/location" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Location Management">
                           <Map />
                           <span>Location Management</span>
                       </SidebarMenuButton>
@@ -174,7 +176,7 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
               <SidebarMenuItem>
                   <Link href="/dashboard/admin/payments" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Payment Management">
                           <CreditCard />
                           <span>Payment Management</span>
                       </SidebarMenuButton>
@@ -182,12 +184,13 @@ const MainSidebarContent = () => (
               </SidebarMenuItem>
                 <SidebarMenuItem>
                   <Link href="/dashboard/admin/settings" passHref>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Settings">
                           <Settings />
                           <span>Settings</span>
                       </SidebarMenuButton>
                   </Link>
               </SidebarMenuItem>
+            </SidebarGroup>
           </SidebarMenu>
         </SidebarContent>
         <SidebarSeparator />
@@ -195,7 +198,7 @@ const MainSidebarContent = () => (
             <SidebarMenu>
                 <SidebarMenuItem>
                     <Link href="#" passHref>
-                        <SidebarMenuButton>
+                        <SidebarMenuButton tooltip="Support">
                             <LifeBuoy />
                             <span>Support</span>
                         </SidebarMenuButton>
@@ -204,12 +207,12 @@ const MainSidebarContent = () => (
                  <SidebarMenuItem>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                             <SidebarMenuButton>
-                                <Avatar className="h-7 w-7">
+                             <SidebarMenuButton tooltip="My Account" size="lg">
+                                <Avatar className="h-9 w-9">
                                     <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="person avatar" />
                                     <AvatarFallback>U</AvatarFallback>
                                 </Avatar>
-                                <span className="flex flex-col">
+                                <span className="flex flex-col items-start group-data-[collapsible=icon]:hidden">
                                     <span>User</span>
                                     <span className="text-xs text-muted-foreground">user@email.com</span>
                                 </span>
@@ -243,6 +246,7 @@ export default function DashboardLayout({
       <SidebarInset>
         <header className="flex h-16 items-center justify-between p-4 bg-background border-b">
            <div className="flex items-center gap-4">
+                <SidebarTrigger className="hidden md:flex" />
                 <h1 className="text-xl font-semibold hidden md:block">Welcome Back!</h1>
            </div>
            <div className="flex items-center gap-4">
