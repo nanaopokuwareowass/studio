@@ -1,8 +1,10 @@
 
 "use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Smartphone, ShieldCheck, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function Benefits() {
   const benefits = [
@@ -22,15 +24,35 @@ export function Benefits() {
     visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
   };
 
-  return (
-    <motion.section
-      className="w-full py-16 md:py-24 lg:py-32 bg-background"
+  return (<motion.section
+      className="w-full py-16 md:py-24 lg:py-32 bg-background relative"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       variants={sectionVariants}
-    >
-      <div className="container mx-auto px-4 md:px-6">
+    >{/* Enhanced Background Images */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
+        <div className="absolute top-0 left-0 w-1/3 h-2/3 transform -translate-x-10 translate-y-10 opacity-15">
+          <Image
+            src="/images/headlight-clean.jpg"
+            alt="Headlight cleaning background"
+            fill
+            className="object-cover rounded-br-[100px] filter blur-sm"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-transparent to-transparent" />
+        </div>
+        <div className="absolute bottom-0 right-0 w-1/3 h-2/3 transform translate-x-10 -translate-y-10 opacity-15">
+          <Image
+            src="/images/interior-clean.jpg"
+            alt="Interior cleaning background"
+            fill
+            className="object-cover rounded-tl-[100px] filter blur-sm"
+          />
+          <div className="absolute inset-0 bg-gradient-to-tl from-background via-transparent to-transparent" />
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative">
         <motion.div className="text-center" variants={itemVariants}>
             <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm mb-4">Why Choose Us</div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -51,7 +73,7 @@ export function Benefits() {
               whileHover={{ y: -8 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Card className="text-center shadow-sm hover:shadow-xl transition-shadow border-transparent hover:border-primary h-full">
+              <Card className="text-center shadow-sm hover:shadow-xl transition-all duration-300 border-transparent hover:border-primary h-full backdrop-blur-sm bg-background/80">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-4 w-fit mb-4">{benefit.icon}</div>
                   <CardTitle>{benefit.title}</CardTitle>
@@ -64,6 +86,7 @@ export function Benefits() {
           ))}
         </motion.div>
       </div>
-    </motion.section>
-  );
+    </motion.section>);
 }
+
+

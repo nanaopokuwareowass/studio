@@ -6,6 +6,7 @@ import { AutoDetailing } from "@/components/landing/auto-detailing";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { Marketplace } from "@/components/landing/marketplace";
 import { Benefits } from "@/components/landing/benefits";
+import { Services } from "@/components/landing/services";
 import { Testimonials } from "@/components/landing/testimonials";
 import { Faq } from "@/components/landing/faq";
 import { Join } from "@/components/landing/join";
@@ -21,8 +22,8 @@ export default function LandingPage() {
         <About />
         <AutoDetailing />
         <HowItWorks />
-        <Marketplace />
-        <Benefits />
+        <Marketplace /><Benefits />
+        <Services />
         <Testimonials />
         <Faq />
         <Join />

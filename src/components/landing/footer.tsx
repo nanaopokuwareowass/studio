@@ -1,6 +1,7 @@
 
 "use client"
-import { Car, Twitter, Facebook, Instagram } from "lucide-react";
+import { Twitter, Facebook, Instagram } from "lucide-react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 export function Footer() {
@@ -13,12 +14,16 @@ export function Footer() {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="container mx-auto px-4 md:px-6 py-12 grid gap-8 md:grid-cols-3">
-        <div className="flex flex-col gap-2">
-          <a className="flex items-center gap-2" href="#">
-            <Car className="h-8 w-8" />
-            <span className="text-xl font-semibold">DT GUYS PRO</span>
+        <div className="flex flex-col gap-2"><a className="flex items-center gap-2" href="#">
+            <Image
+              src="/images/logo.svg"
+              alt="DT GUYS PRO"width={64}
+              height={64}
+              className="w-16 h-16"
+            />
+            <span className="text-2xl font-semibold">DT GUYS PRO</span>
           </a>
-          <p className="text-sm text-primary-foreground/80">
+          <p className="text-base text-primary-foreground/80 mt-2">
             We don’t just clean, we wow!
           </p>
         </div>

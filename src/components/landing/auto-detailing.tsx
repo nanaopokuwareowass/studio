@@ -30,17 +30,34 @@ export function AutoDetailing() {
       viewport={{ once: true, amount: 0.3 }}
       variants={sectionVariants}
     >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
-           <motion.div className="relative aspect-video" variants={imageVariants}>
-            <Image
-              src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/9A293AA236872583F8D8A70129B72F41.jpg"
-              fill
-              alt="Auto Detailing"
-              className="rounded-xl object-cover shadow-2xl"
-              data-ai-hint="car detailing"
-            />
-           </motion.div>
+      <div className="container mx-auto px-4 md:px-6"><div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center"><motion.div className="space-y-6" variants={imageVariants}>
+            <div className="relative aspect-[4/3] group overflow-hidden rounded-xl">
+              <Image
+                src="/images/interior-clean.jpg"
+                alt="Professional Interior Detailing"
+                fill
+                className="rounded-xl object-cover shadow-2xl transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <h3 className="text-white text-lg font-semibold">Interior Detailing</h3>
+                <p className="text-white/80 text-sm">Professional interior cleaning and restoration</p>
+              </div>
+            </div>
+            <div className="relative aspect-[4/3] group overflow-hidden rounded-xl">
+              <Image
+                src="/images/headlight-clean.jpg"
+                alt="Headlight Restoration Service"
+                fill
+                className="rounded-xl object-cover shadow-2xl transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <h3 className="text-white text-lg font-semibold">Headlight Restoration</h3>
+                <p className="text-white/80 text-sm">Crystal clear headlights for better visibility</p>
+              </div>
+            </div>
+          </motion.div>
           <motion.div className="space-y-6" variants={sectionVariants}>
             <motion.div className="inline-block rounded-lg bg-primary text-primary-foreground px-3 py-1 text-sm" variants={itemVariants}>Our Services</motion.div>
             <motion.h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl" variants={itemVariants}>

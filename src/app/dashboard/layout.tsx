@@ -1,11 +1,12 @@
-
+x
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarSeparator, SidebarGroup, SidebarGroupLabel } from "@/components/ui/sidebar";
-import { Bell, Briefcase, Calendar, Car, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu, Wrench, CreditCard, BarChart3, Heart, Home, BellRing, History, Tablet } from "lucide-react";
+import { Bell, Briefcase, Calendar, LayoutGrid, LifeBuoy, LogOut, Settings, ShoppingBag, Truck, User, Users, LineChart, Store, Map, Menu, Wrench, CreditCard, BarChart3, Heart, Home, BellRing, History, Tablet } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -14,7 +15,12 @@ const MainSidebarContent = () => (
     <>
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
-            <Car className="h-8 w-8 text-primary" />
+            <Image
+              src="/images/logo.svg"
+              alt="DT GUYS PRO"width={40}
+              height={40}
+              className="h-10 w-10"
+            />
             <span className="font-semibold text-xl group-data-[collapsible=icon]:hidden">DT GUYS PRO</span>
           </div>
         </SidebarHeader>
@@ -41,7 +47,12 @@ const MainSidebarContent = () => (
                  <SidebarMenuItem>
                     <Link href="/dashboard/my-vehicles" passHref>
                         <SidebarMenuButton>
-                            <Car />
+                            <Image
+                              src="/images/logo.svg"
+                              alt="Vehicle Icon"width={28}
+                              height={28}
+                              className="w-7 h-7"
+                            />
                             <span>My Vehicles</span>
                         </SidebarMenuButton>
                     </Link>

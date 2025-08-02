@@ -7,7 +7,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Car, Home, MapPin, MoreVertical, PlusCircle, Trash2 } from "lucide-react";
+import { MapPin, MoreVertical, PlusCircle, Trash2 } from "lucide-react";
+import Image from "next/image";
 
 const savedVehicles = [
     { id: 'veh-1', name: 'My Toyota Camry', type: 'Sedan', license: 'GT-1234-20', default: true },
@@ -33,7 +34,16 @@ export function MyVehicles() {
             <Card>
                 <CardHeader className="flex-row items-center justify-between">
                     <div>
-                        <CardTitle className="flex items-center gap-2"><Car className="h-6 w-6"/> My Vehicles</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                          <Image
+                            src="/images/logo.svg"
+                            alt="Vehicle Icon"
+                            width={24}
+                            height={24}
+                            className="w-6 h-6"
+                          />
+                          My Vehicles
+                        </CardTitle>
                         <CardDescription>Manage your saved cars.</CardDescription>
                     </div>
                     <AddVehicleDialog />

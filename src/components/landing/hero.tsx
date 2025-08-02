@@ -126,20 +126,21 @@ export function Hero() {
   }
 
   return (
-    <section id="home" className="relative w-full pt-20 md:pt-32 lg:pt-48 pb-12 md:pb-24 lg:pb-32">
-       <div className="absolute inset-0 -z-10">
-        <Image
-          src="https://storage.googleapis.com/gweb-aip-images/us-central1/aip-4775438853924192256/264A7E0011C6F893707B0F3354C15A42.jpg"
-          alt="Background"
-          fill
-          className="object-cover"
-          data-ai-hint="car wash"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/60" />
-      </div>
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center">
+    <section id="home" className="relative w-full min-h-screen">
+      <div className="absolute inset-0">
+        {/* Main hero image */}
+        <div className="relative w-full h-full">
+          <Image
+            src="/images/foam-spray.jpg"
+            alt="Professional foam spray car washing"
+            fill
+            className="object-cover brightness-[0.85]"
+            priority
+          />{/* Subtle overlay gradient for text readability */}
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
+      </div><div className="container mx-auto px-4 md:px-6 relative z-10 h-screen flex items-center">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-20 items-center max-w-7xl mx-auto">
           <motion.div 
             className="space-y-6 text-center lg:text-left"
             initial="hidden"
@@ -147,13 +148,13 @@ export function Hero() {
             variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
           >
             <motion.h1 
-              className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl !leading-tight text-primary-foreground"
+              className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl !leading-tight text-white"
               variants={textVariants}
             >
               We don’t just clean, we wow!
             </motion.h1>
             <motion.p 
-              className="mt-6 text-lg text-primary-foreground/80 md:text-xl max-w-2xl mx-auto lg:mx-0"
+              className="mt-6 text-lg text-white/90 md:text-xl max-w-2xl mx-auto lg:mx-0"
               variants={textVariants}
             >
               DT GUYS PRO is your premier mobile car wash and car care business, delivering top-notch service right to your doorstep.
