@@ -9,16 +9,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     router.push("/dashboard");
   };
 
   return (
     <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
+       <div className="hidden bg-muted lg:block relative">
+        <Image
+          src="https://placehold.co/1200x800.png"
+          alt="A pristine car wash setup"
+          data-ai-hint="car wash setup"
+          fill
+          className="object-cover"
+        />
+         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+         <div className="absolute bottom-10 left-10 text-white">
+            <h2 className="text-3xl font-bold">Start your journey to a cleaner car.</h2>
+            <p className="mt-2 max-w-md">Create an account to unlock exclusive benefits and book your first wash in minutes.</p>
+         </div>
+      </div>
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
@@ -31,12 +45,16 @@ export default function LoginPage() {
                 />
                 <span className="text-xl font-bold">DT GUYS PRO</span>
             </Link>
-            <h1 className="text-3xl font-bold">Welcome Back</h1>
+            <h1 className="text-3xl font-bold">Create an Account</h1>
             <p className="text-balance text-muted-foreground">
-              Enter your credentials to access your account
+              Enter your information to get started
             </p>
           </div>
-          <form onSubmit={handleLogin} className="grid gap-4">
+          <form onSubmit={handleSignup} className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="full-name">Full Name</Label>
+              <Input id="full-name" placeholder="John Doe" required />
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -47,45 +65,27 @@ export default function LoginPage() {
               />
             </div>
             <div className="grid gap-2">
-              <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <Link
-                  href="#"
-                  className="ml-auto inline-block text-sm underline"
-                >
-                  Forgot your password?
-                </Link>
-              </div>
               <Input id="password" type="password" required />
             </div>
+             <div className="grid gap-2">
+                <Label htmlFor="confirm-password">Confirm Password</Label>
+              <Input id="confirm-password" type="password" required />
+            </div>
             <Button type="submit" className="w-full">
-              Login
+              Create account
             </Button>
             <Button variant="outline" className="w-full">
-              Login with Google
+              Sign up with Google
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="underline">
-              Sign up
+            Already have an account?{" "}
+            <Link href="/login" className="underline">
+              Log in
             </Link>
           </div>
         </div>
-      </div>
-      <div className="hidden bg-muted lg:block relative">
-        <Image
-          src="https://placehold.co/1200x800.png"
-          alt="A clean and shiny car"
-          data-ai-hint="shiny car"
-          fill
-          className="object-cover"
-        />
-         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-         <div className="absolute bottom-10 left-10 text-white">
-            <h2 className="text-3xl font-bold">We don’t just clean, we wow!</h2>
-            <p className="mt-2 max-w-md">Join us to experience the ultimate convenience in car care, right at your doorstep.</p>
-         </div>
       </div>
     </div>
   );
