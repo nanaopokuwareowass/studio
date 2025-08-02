@@ -198,7 +198,7 @@ const MainSidebarContent = () => (
         <SidebarFooter>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <Link href="#" passHref>
+                    <Link href="/#contact" passHref>
                         <SidebarMenuButton tooltip="Support">
                             <LifeBuoy />
                             <span className="group-data-[collapsible=icon]:hidden">Support</span>
