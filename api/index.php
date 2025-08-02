@@ -74,6 +74,44 @@ try {
                     throw new Exception('Method not allowed');
             }
             break;
+        
+        case 'services':
+            switch($requestMethod) {
+                case 'GET':
+                    $response = $controller->getServices();
+                    break;
+                case 'POST':
+                    $response = $controller->createService();
+                    break;
+                case 'PUT':
+                    $response = $controller->updateService();
+                    break;
+                case 'DELETE':
+                    $response = $controller->deleteService();
+                    break;
+                default:
+                    throw new Exception('Method not allowed');
+            }
+            break;
+
+        case 'products':
+            switch($requestMethod) {
+                case 'GET':
+                    $response = $controller->getProducts();
+                    break;
+                case 'POST':
+                    $response = $controller->createProduct();
+                    break;
+                case 'PUT':
+                    $response = $controller->updateProduct();
+                    break;
+                case 'DELETE':
+                    $response = $controller->deleteProduct();
+                    break;
+                default:
+                    throw new Exception('Method not allowed');
+            }
+            break;
             
         default:
             throw new Exception('Endpoint not found');

@@ -302,4 +302,122 @@ class ApiController {
             );
         }
     }
+
+    // Service Methods
+    public function getServices() {
+        try {
+            $query = "SELECT * FROM services";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return array("status" => "success", "data" => $stmt->fetchAll());
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
+
+    public function createService() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $query = "INSERT INTO services (name, description, price, duration) VALUES (:name, :description, :price, :duration)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":name", $data->name);
+            $stmt->bindParam(":description", $data->description);
+            $stmt->bindParam(":price", $data->price);
+            $stmt->bindParam(":duration", $data->duration);
+            $stmt->execute();
+            return array("status" => "success", "message" => "Service created successfully");
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
+
+    public function updateService() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $query = "UPDATE services SET name = :name, description = :description, price = :price, duration = :duration WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":name", $data->name);
+            $stmt->bindParam(":description", $data->description);
+            $stmt->bindParam(":price", $data->price);
+            $stmt->bindParam(":duration", $data->duration);
+            $stmt->bindParam(":id", $data->id);
+            $stmt->execute();
+            return array("status" => "success", "message" => "Service updated successfully");
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
+
+    public function deleteService() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $query = "DELETE FROM services WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $data->id);
+            $stmt->execute();
+            return array("status" => "success", "message" => "Service deleted successfully");
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
+
+    // Product Methods
+    public function getProducts() {
+        try {
+            $query = "SELECT * FROM products";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return array("status" => "success", "data" => $stmt->fetchAll());
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
+
+    public function createProduct() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $query = "INSERT INTO products (name, description, price, stock, category) VALUES (:name, :description, :price, :stock, :category)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":name", $data->name);
+            $stmt->bindParam(":description", $data->description);
+            $stmt->bindParam(":price", $data->price);
+            $stmt->bindParam(":stock", $data->stock);
+            $stmt->bindParam(":category", $data->category);
+            $stmt->execute();
+            return array("status" => "success", "message" => "Product created successfully");
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
+
+    public function updateProduct() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $query = "UPDATE products SET name = :name, description = :description, price = :price, stock = :stock, category = :category WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":name", $data->name);
+            $stmt->bindParam(":description", $data->description);
+            $stmt->bindParam(":price", $data->price);
+            $stmt->bindParam(":stock", $data->stock);
+            $stmt->bindParam(":category", $data->category);
+            $stmt->bindParam(":id", $data->id);
+            $stmt->execute();
+            return array("status" => "success", "message" => "Product updated successfully");
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
+
+    public function deleteProduct() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $query = "DELETE FROM products WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $data->id);
+            $stmt->execute();
+            return array("status" => "success", "message" => "Product deleted successfully");
+        } catch (PDOException $e) {
+            return array("status" => "error", "message" => $e->getMessage());
+        }
+    }
 }
