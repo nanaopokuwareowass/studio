@@ -149,6 +149,60 @@ class ApiController {
             );
         }
     }
+    
+    public function updateVehicle() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            
+            $query = "UPDATE vehicles 
+                     SET make = :make, 
+                         model = :model,
+                         year = :year,
+                         license_plate = :license_plate
+                     WHERE id = :id";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":make", $data->make);
+            $stmt->bindParam(":model", $data->model);
+            $stmt->bindParam(":year", $data->year);
+            $stmt->bindParam(":license_plate", $data->license_plate);
+            $stmt->bindParam(":id", $data->id);
+            
+            $stmt->execute();
+            
+            return array(
+                "status" => "success",
+                "message" => "Vehicle updated successfully"
+            );
+        } catch (PDOException $e) {
+            return array(
+                "status" => "error",
+                "message" => $e->getMessage()
+            );
+        }
+    }
+
+    public function deleteVehicle() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            
+            $query = "DELETE FROM vehicles WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $data->id);
+            
+            $stmt->execute();
+            
+            return array(
+                "status" => "success",
+                "message" => "Vehicle deleted successfully"
+            );
+        } catch (PDOException $e) {
+            return array(
+                "status" => "error",
+                "message" => $e->getMessage()
+            );
+        }
+    }
 
     // User Methods
     public function getUsers() {
@@ -188,6 +242,58 @@ class ApiController {
             return array(
                 "status" => "success",
                 "message" => "User created successfully"
+            );
+        } catch (PDOException $e) {
+            return array(
+                "status" => "error",
+                "message" => $e->getMessage()
+            );
+        }
+    }
+
+    public function updateUser() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            
+            $query = "UPDATE users 
+                     SET name = :name, 
+                         email = :email,
+                         role = :role
+                     WHERE id = :id";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":name", $data->name);
+            $stmt->bindParam(":email", $data->email);
+            $stmt->bindParam(":role", $data->role);
+            $stmt->bindParam(":id", $data->id);
+            
+            $stmt->execute();
+            
+            return array(
+                "status" => "success",
+                "message" => "User updated successfully"
+            );
+        } catch (PDOException $e) {
+            return array(
+                "status" => "error",
+                "message" => $e->getMessage()
+            );
+        }
+    }
+
+    public function deleteUser() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            
+            $query = "DELETE FROM users WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $data->id);
+            
+            $stmt->execute();
+            
+            return array(
+                "status" => "success",
+                "message" => "User deleted successfully"
             );
         } catch (PDOException $e) {
             return array(
