@@ -8,6 +8,7 @@ import {
   MoreHorizontal,
   Search
 } from "lucide-react"
+import axios from "axios";
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -45,15 +46,20 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useToast } from "@/hooks/use-toast"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
-const usersData = [
-  { id: "USR-001", name: "John Doe", email: "john.d@example.com", role: "Customer", status: "Active", joined: "2023-01-15", avatar: "https://placehold.co/100x100.png" },
-  { id: "USR-002", name: "Jane Smith", email: "jane.s@example.com", role: "Customer", status: "Active", joined: "2023-02-20", avatar: "https://placehold.co/100x100.png" },
-  { id: "USR-003", name: "Mike Ross", email: "mike.r@example.com", role: "Crew", status: "Active", joined: "2023-03-10", avatar: "https://placehold.co/100x100.png" },
-  { id: "USR-004", name: "Harvey Specter", email: "harvey.s@example.com", role: "Crew", status: "On-leave", joined: "2023-03-10", avatar: "https://placehold.co/100x100.png" },
-  { id: "USR-005", name: "Jessica Pearson", email: "jessica.p@example.com", role: "Admin", status: "Active", joined: "2023-01-01", avatar: "https://placehold.co/100x100.png" },
-  { id: "USR-006", name: "Louis Litt", email: "louis.l@example.com", role: "Crew", status: "Inactive", joined: "2023-05-22", avatar: "https://placehold.co/100x100.png" },
-];
+const API_URL = "/api";
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: "Customer" | "Crew" | "Admin" | "Staff";
+  status: "Active" | "Inactive" | "On-leave";
+  joined: string;
+  avatar: string;
+};
 
 const getStatusBadgeVariant = (status: string) => {
   switch (status) {
@@ -75,9 +81,37 @@ const getRoleBadgeVariant = (role: string) => {
 
 
 export function UserManagement() {
+  const [users, setUsers] = React.useState<User[]>([]);
   const [activeTab, setActiveTab] = React.useState("all");
+  const { toast } = useToast();
 
-  const filteredUsers = usersData.filter(user => {
+  const fetchUsers = React.useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_URL}/users`);
+      if (response.data.status === 'success') {
+        // The API returns role as lowercase, let's normalize it to capitalized for consistency
+        const fetchedUsers = response.data.data.map((user: any) => ({
+            ...user,
+            role: user.role.charAt(0).toUpperCase() + user.role.slice(1),
+            // Add placeholder data for fields not in the DB
+            status: "Active",
+            joined: new Date().toISOString().split('T')[0], // Placeholder
+            avatar: "https://placehold.co/100x100.png"
+        }));
+        setUsers(fetchedUsers);
+      } else {
+        toast({ variant: "destructive", title: "Failed to fetch users", description: response.data.message });
+      }
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  }, [toast]);
+
+  React.useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  const filteredUsers = users.filter(user => {
     if (activeTab === 'all') return true;
     if (activeTab === 'customers') return user.role === 'Customer';
     if (activeTab === 'crew') return user.role === 'Crew';
@@ -102,7 +136,7 @@ export function UserManagement() {
                   Export
                 </span>
               </Button>
-              <AddUserDialog />
+              <AddUserDialog onUserAdded={fetchUsers} />
             </div>
           </div>
           <TabsContent value={activeTab}>
@@ -169,10 +203,9 @@ export function UserManagement() {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>View Profile</DropdownMenuItem>
-                                <DropdownMenuItem>Edit User</DropdownMenuItem>
+                                <EditUserDialog user={user} onUserUpdated={fetchUsers} />
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem className="text-destructive">Delete User</DropdownMenuItem>
+                                <DeleteUserDialog userId={user.id} onUserDeleted={fetchUsers}/>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             </TableCell>
@@ -189,9 +222,39 @@ export function UserManagement() {
   )
 }
 
-function AddUserDialog() {
+function AddUserDialog({ onUserAdded }: { onUserAdded: () => void }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [role, setRole] = React.useState<string | undefined>();
+  const { toast } = useToast();
+
+  const handleSubmit = async () => {
+    if (!name || !email || !password || !role) {
+        toast({ variant: "destructive", title: "Validation Error", description: "Please fill all fields."});
+        return;
+    }
+    try {
+        const response = await axios.post(`${API_URL}/users`, { name, email, password, role: role.toLowerCase() });
+        if(response.data.status === 'success') {
+            toast({ title: "User Created", description: "The new user has been added successfully."});
+            onUserAdded();
+            setIsOpen(false);
+            setName("");
+            setEmail("");
+            setPassword("");
+            setRole(undefined);
+        } else {
+            toast({ variant: "destructive", title: "Failed to create user", description: response.data.message });
+        }
+    } catch (error: any) {
+        toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  };
+
   return (
-     <Dialog>
+     <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
             <Button size="sm" className="h-8 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
@@ -210,31 +273,147 @@ function AddUserDialog() {
             <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">Name</Label>
-                    <Input id="name" placeholder="John Doe" className="col-span-3" />
+                    <Input id="name" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="email" className="text-right">Email</Label>
-                    <Input id="email" type="email" placeholder="user@example.com" className="col-span-3" />
+                    <Input id="email" type="email" placeholder="user@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="col-span-3" />
+                </div>
+                 <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="password" className="text-right">Password</Label>
+                    <Input id="password" type="password" placeholder="********" value={password} onChange={(e) => setPassword(e.target.value)} className="col-span-3" />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="role" className="text-right">Role</Label>
-                    <Select>
+                    <Select onValueChange={setRole} value={role}>
                         <SelectTrigger className="col-span-3">
                             <SelectValue placeholder="Select a role" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="customer">Customer</SelectItem>
-                            <SelectItem value="crew">Crew</SelectItem>
-                            <SelectItem value="admin">Admin</SelectItem>
-                            <SelectItem value="staff">Staff</SelectItem>
+                            <SelectItem value="Customer">Customer</SelectItem>
+                            <SelectItem value="Crew">Crew</SelectItem>
+                            <SelectItem value="Admin">Admin</SelectItem>
+                            <SelectItem value="Staff">Staff</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
             </div>
             <DialogFooter>
-                <Button type="submit">Create User</Button>
+                <Button onClick={handleSubmit}>Create User</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>
   )
+}
+
+function EditUserDialog({ user, onUserUpdated }: { user: User, onUserUpdated: () => void }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [name, setName] = React.useState(user.name);
+  const [email, setEmail] = React.useState(user.email);
+  const [role, setRole] = React.useState(user.role);
+  const { toast } = useToast();
+
+  const handleSubmit = async () => {
+    if (!name || !email || !role) {
+        toast({ variant: "destructive", title: "Validation Error", description: "Please fill all fields."});
+        return;
+    }
+    try {
+        const response = await axios.put(`${API_URL}/users`, { id: user.id, name, email, role: role.toLowerCase() });
+        if(response.data.status === 'success') {
+            toast({ title: "User Updated", description: "User details have been updated."});
+            onUserUpdated();
+            setIsOpen(false);
+        } else {
+            toast({ variant: "destructive", title: "Failed to update user", description: response.data.message });
+        }
+    } catch (error: any) {
+        toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          Edit User
+        </DropdownMenuItem>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit User</DialogTitle>
+          <DialogDescription>
+            Update the details for {user.name}.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name-edit" className="text-right">Name</Label>
+                <Input id="name-edit" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="email-edit" className="text-right">Email</Label>
+                <Input id="email-edit" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="role-edit" className="text-right">Role</Label>
+                <Select value={role} onValueChange={(value) => setRole(value as User['role'])}>
+                    <SelectTrigger className="col-span-3">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="Customer">Customer</SelectItem>
+                        <SelectItem value="Crew">Crew</SelectItem>
+                        <SelectItem value="Admin">Admin</SelectItem>
+                        <SelectItem value="Staff">Staff</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+        </div>
+        <DialogFooter>
+            <Button onClick={handleSubmit}>Save Changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function DeleteUserDialog({ userId, onUserDeleted }: { userId: string, onUserDeleted: () => void }) {
+    const { toast } = useToast();
+
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(`${API_URL}/users`, { data: { id: userId } });
+            if(response.data.status === 'success') {
+                toast({ title: "User Deleted", description: "The user has been successfully deleted."});
+                onUserDeleted();
+            } else {
+                toast({ variant: "destructive", title: "Failed to delete user", description: response.data.message });
+            }
+        } catch (error: any) {
+            toast({ variant: "destructive", title: "API Error", description: error.message });
+        }
+    };
+    
+    return (
+         <AlertDialog>
+            <AlertDialogTrigger asChild>
+                 <DropdownMenuItem className="text-destructive" onSelect={(e) => e.preventDefault()}>
+                    Delete User
+                </DropdownMenuItem>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete the user account and remove their data from our servers.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
 }
