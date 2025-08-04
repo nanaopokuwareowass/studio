@@ -2,7 +2,8 @@
 "use client"
 
 import * as React from "react"
-import { MoreHorizontal, PlusCircle } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
+import axios from "axios";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -26,47 +27,51 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BookWashModal } from "./book-wash-modal"
+import { useToast } from "@/hooks/use-toast";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
-const bookingsData = [
-  {
-    id: "BOOK-001",
-    service: "Full Detailing",
-    date: "2024-08-01T10:00:00Z",
-    status: "Upcoming",
-    crew: { name: "Mike Ross", avatar: "https://placehold.co/100x100.png" },
-    amount: 75.00,
-  },
-  {
-    id: "BOOK-002",
-    service: "Exterior Wash",
-    date: "2024-07-28T14:00:00Z",
-    status: "Completed",
-    crew: { name: "Harvey Specter", avatar: "https://placehold.co/100x100.png" },
-    amount: 35.00,
-  },
-  {
-    id: "BOOK-003",
-    service: "Interior Cleaning",
-    date: "2024-07-29T11:00:00Z",
-    status: "Completed",
-    crew: { name: "Louis Litt", avatar: "https://placehold.co/100x100.png" },
-    amount: 50.00,
-  },
-   {
-    id: "BOOK-004",
-    service: "Engine Wash",
-    date: "2024-07-25T09:00:00Z",
-    status: "Completed",
-    crew: { name: "Mike Ross", avatar: "https://placehold.co/100x100.png" },
-    amount: 40.00,
-  },
-];
 
+const API_URL = "/api";
+
+type Booking = {
+    id: string;
+    service: string;
+    booking_date: string;
+    status: "Upcoming" | "Completed" | "Cancelled";
+    crew: { name: string, avatar: string } | null;
+    amount: number;
+}
 
 export function MyBookings() {
+  const [bookings, setBookings] = React.useState<Booking[]>([]);
   const [activeTab, setActiveTab] = React.useState("all");
+  const { toast } = useToast();
 
-  const filteredBookings = bookingsData.filter(booking => {
+  const fetchBookings = React.useCallback(async () => {
+    try {
+        const response = await axios.get(`${API_URL}/bookings`);
+        if (response.data.status === 'success') {
+            // Placeholder data mapping
+            const mappedBookings = response.data.data.map((booking: any) => ({
+                ...booking,
+                service: "Service " + booking.service_id,
+                crew: { name: "Mike Ross", avatar: "https://placehold.co/100x100.png" },
+                amount: 75.00
+            }));
+            setBookings(mappedBookings);
+        } else {
+            toast({ variant: "destructive", title: "Failed to fetch bookings", description: response.data.message });
+        }
+    } catch (error: any) {
+        toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  }, [toast]);
+
+  React.useEffect(() => {
+    fetchBookings();
+  }, [fetchBookings]);
+
+  const filteredBookings = bookings.filter(booking => {
     if (activeTab === 'all') return true;
     return booking.status.toLowerCase().replace(" ", "-") === activeTab;
   });
@@ -118,7 +123,7 @@ export function MyBookings() {
                             <TableRow key={booking.id}>
                                 <TableCell className="font-medium">{booking.service}</TableCell>
                                 <TableCell className="hidden sm:table-cell">
-                                    {new Date(booking.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}, {new Date(booking.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                                    {new Date(booking.booking_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}, {new Date(booking.booking_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                                 </TableCell>
                                 <TableCell>
                                     <Badge variant={getStatusVariant(booking.status)}>{booking.status}</Badge>
@@ -149,7 +154,7 @@ export function MyBookings() {
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                         <DropdownMenuItem>View Details</DropdownMenuItem>
                                         <DropdownMenuItem>Reschedule</DropdownMenuItem>
-                                        <DropdownMenuItem className="text-destructive">Cancel Booking</DropdownMenuItem>
+                                        <DeleteBookingDialog bookingId={booking.id} onBookingDeleted={fetchBookings} />
                                     </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
@@ -171,4 +176,41 @@ export function MyBookings() {
       </CardContent>
     </Card>
   )
+}
+
+function DeleteBookingDialog({ bookingId, onBookingDeleted }: { bookingId: string, onBookingDeleted: () => void }) {
+    const { toast } = useToast();
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(`${API_URL}/bookings`, { data: { id: bookingId } });
+            if (response.data.status === 'success') {
+                toast({ title: "Booking Cancelled", description: "The booking has been removed." });
+                onBookingDeleted();
+            } else {
+                toast({ variant: "destructive", title: "Failed to cancel booking", description: response.data.message });
+            }
+        } catch (error: any) {
+            toast({ variant: "destructive", title: "API Error", description: error.message });
+        }
+    };
+    
+    return (
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                <DropdownMenuItem className="text-destructive" onSelect={e => e.preventDefault()}>Cancel Booking</DropdownMenuItem>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This will permanently cancel this booking. This action cannot be undone.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90">Confirm</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
 }

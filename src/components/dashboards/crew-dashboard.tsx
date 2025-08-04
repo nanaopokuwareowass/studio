@@ -14,47 +14,58 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { Input } from "../ui/input";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
-const assignedWashes = [
-    {
-        bookingId: "BOOK-001",
-        customer: "John Doe",
-        vehicle: "Toyota Camry",
-        service: "Full Detailing",
-        location: "123 Main St, Accra",
-        dateTime: "2024-07-28T10:00:00Z",
-        status: "Upcoming"
-    },
-    {
-        bookingId: "BOOK-005",
-        customer: "Alice Williams",
-        vehicle: "Honda CR-V",
-        service: "Exterior Wash",
-        location: "456 Oak Ave, Tema",
-        dateTime: "2024-07-28T14:00:00Z",
-        status: "Upcoming"
-    },
-     {
-        bookingId: "BOOK-002",
-        customer: "Jane Smith",
-        vehicle: "Ford F-150",
-        service: "Interior Cleaning",
-        location: "789 Pine Ln, Kumasi",
-        dateTime: "2024-07-27T15:00:00Z",
-        status: "Completed"
-    },
-];
+const API_URL = "/api";
 
-type Wash = typeof assignedWashes[0];
+type Wash = {
+    id: string;
+    customer: string;
+    vehicle: string;
+    service: string;
+    location: string;
+    booking_date: string;
+    status: string;
+};
 
 export function CrewDashboard() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [washes, setWashes] = useState<Wash[]>([]);
+  const { toast } = useToast();
+
+  const fetchWashes = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_URL}/bookings`);
+      if (response.data.status === 'success') {
+        const mappedWashes = response.data.data
+            .filter((wash: any) => wash.status !== 'Completed')
+            .map((wash: any) => ({
+                ...wash,
+                customer: 'Customer ' + wash.user_id,
+                vehicle: 'Vehicle ' + wash.vehicle_id,
+                service: 'Service ' + wash.service_id,
+                location: 'Location ' + wash.id, // Placeholder
+            }));
+        setWashes(mappedWashes);
+      } else {
+        toast({ variant: "destructive", title: "Failed to fetch washes", description: response.data.message });
+      }
+    } catch(error: any) {
+        toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  }, [toast]);
+
+  useEffect(() => {
+    fetchWashes();
+  }, [fetchWashes]);
+
 
   const handleNavigate = (location: string) => {
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
@@ -77,7 +88,7 @@ export function CrewDashboard() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">2</div>
+            <div className="text-2xl font-bold">{washes.filter(w => w.status === 'Upcoming').length}</div>
             <p className="text-xs text-muted-foreground">Assigned for today</p>
           </CardContent>
         </Card>
@@ -97,8 +108,8 @@ export function CrewDashboard() {
             <CalendarIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">10:00 AM</div>
-            <p className="text-xs text-muted-foreground">Today with John Doe</p>
+            <div className="text-2xl font-bold">{washes.length > 0 ? new Date(washes[0].booking_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'N/A'}</div>
+            <p className="text-xs text-muted-foreground">Today with {washes.length > 0 ? washes[0].customer : 'N/A'}</p>
           </CardContent>
         </Card>
       </div>
@@ -122,15 +133,15 @@ export function CrewDashboard() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {assignedWashes.map((wash) => (
-                                    <TableRow key={wash.bookingId} className={wash.status === 'Completed' ? 'opacity-60' : ''}>
+                                {washes.map((wash) => (
+                                    <TableRow key={wash.id} className={wash.status === 'Completed' ? 'opacity-60' : ''}>
                                         <TableCell>
                                             <div className="font-medium">{wash.customer}</div>
                                             <div className="text-sm text-muted-foreground">{wash.vehicle}</div>
                                             <div className="text-sm text-muted-foreground sm:hidden mt-1">{wash.location}</div>
                                         </TableCell>
                                         <TableCell className="hidden sm:table-cell">{wash.service}</TableCell>
-                                        <TableCell className="hidden sm:table-cell">{new Date(wash.dateTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</TableCell>
+                                        <TableCell className="hidden sm:table-cell">{new Date(wash.booking_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</TableCell>
                                         <TableCell className="text-right">
                                             {wash.status === 'Upcoming' ? (
                                                 <div className="flex gap-2 justify-end">
@@ -141,7 +152,7 @@ export function CrewDashboard() {
                                                     </Button>
                                                 </div>
                                             ) : (
-                                                <Badge variant="secondary">Completed</Badge>
+                                                <Badge variant="secondary">{wash.status}</Badge>
                                             )}
                                         </TableCell>
                                     </TableRow>
@@ -182,7 +193,7 @@ function JobDetailsDialog({ wash }: { wash: Wash }) {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Job Details: {wash.bookingId}</DialogTitle>
+                    <DialogTitle>Job Details: {wash.id}</DialogTitle>
                     <DialogDescription>
                         Log photos and notes for the job for {wash.customer}.
                     </DialogDescription>
