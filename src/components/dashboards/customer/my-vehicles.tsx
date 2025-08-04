@@ -1,19 +1,29 @@
 
 "use client"
 
+import * as React from "react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, MoreVertical, PlusCircle, Trash2 } from "lucide-react";
+import { MapPin, PlusCircle, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { useToast } from "@/hooks/use-toast";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
-const savedVehicles = [
-    { id: 'veh-1', name: 'My Toyota Camry', type: 'Sedan', license: 'GT-1234-20', default: true },
-    { id: 'veh-2', name: 'Weekend SUV', type: 'SUV', license: 'AS-5678-22', default: false },
-];
+const API_URL = "/api";
+
+type Vehicle = {
+    id: string;
+    user_id: string;
+    make: string;
+    model: string;
+    year: number;
+    license_plate: string;
+};
 
 const savedAddresses = [
     { id: 'addr-1', name: 'Home', address: '123 Independence Ave, Accra', default: true },
@@ -21,6 +31,41 @@ const savedAddresses = [
 ]
 
 export function MyVehicles() {
+  const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
+  const { toast } = useToast();
+
+  const fetchVehicles = React.useCallback(async () => {
+    try {
+        const response = await axios.get(`${API_URL}/vehicles`);
+        if (response.data.status === 'success') {
+            setVehicles(response.data.data);
+        } else {
+            toast({ variant: "destructive", title: "Failed to fetch vehicles", description: response.data.message });
+        }
+    } catch (error: any) {
+        toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  }, [toast]);
+
+  React.useEffect(() => {
+    fetchVehicles();
+  }, [fetchVehicles]);
+
+  const handleDeleteVehicle = async (vehicleId: string) => {
+    try {
+      const response = await axios.delete(`${API_URL}/vehicles`, { data: { id: vehicleId } });
+      if (response.data.status === 'success') {
+        toast({ title: "Vehicle Deleted" });
+        fetchVehicles();
+      } else {
+        toast({ variant: "destructive", title: "Failed to delete vehicle", description: response.data.message });
+      }
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  };
+
+
   return (
     <div className="space-y-8">
         <div>
@@ -46,16 +91,30 @@ export function MyVehicles() {
                         </CardTitle>
                         <CardDescription>Manage your saved cars.</CardDescription>
                     </div>
-                    <AddVehicleDialog />
+                    <AddVehicleDialog onVehicleAdded={fetchVehicles} />
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {savedVehicles.map(vehicle => (
+                    {vehicles.map(vehicle => (
                          <div key={vehicle.id} className="flex items-center justify-between rounded-lg border p-4">
                             <div>
-                                <p className="font-semibold">{vehicle.name} {vehicle.default && <span className="text-xs text-primary font-medium ml-2">(Default)</span>}</p>
-                                <p className="text-sm text-muted-foreground">{vehicle.type} - {vehicle.license}</p>
+                                <p className="font-semibold">{vehicle.make} {vehicle.model} ({vehicle.year})</p>
+                                <p className="text-sm text-muted-foreground">{vehicle.license_plate}</p>
                             </div>
-                            <Button variant="ghost" size="icon"><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button variant="ghost" size="icon"><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>This will permanently delete this vehicle from your profile.</AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction onClick={() => handleDeleteVehicle(vehicle.id)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                         </div>
                     ))}
                 </CardContent>
@@ -87,9 +146,46 @@ export function MyVehicles() {
 }
 
 
-function AddVehicleDialog() {
+function AddVehicleDialog({ onVehicleAdded }: { onVehicleAdded: () => void }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [make, setMake] = React.useState("");
+  const [model, setModel] = React.useState("");
+  const [year, setYear] = React.useState("");
+  const [licensePlate, setLicensePlate] = React.useState("");
+  const { toast } = useToast();
+
+  const handleSubmit = async () => {
+    if (!make || !model || !year || !licensePlate) {
+      toast({ variant: "destructive", title: "Please fill all fields" });
+      return;
+    }
+    try {
+      const response = await axios.post(`${API_URL}/vehicles`, {
+        // user_id should come from auth state in a real app
+        user_id: 1, 
+        make,
+        model,
+        year,
+        license_plate: licensePlate
+      });
+      if (response.data.status === 'success') {
+        toast({ title: "Vehicle Added", description: "Your vehicle has been saved." });
+        onVehicleAdded();
+        setIsOpen(false);
+        setMake("");
+        setModel("");
+        setYear("");
+        setLicensePlate("");
+      } else {
+        toast({ variant: "destructive", title: "Failed to add vehicle", description: response.data.message });
+      }
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  };
+
   return (
-     <Dialog>
+     <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
             <Button size="sm">
                 <PlusCircle className="h-4 w-4 mr-2" />
@@ -105,32 +201,24 @@ function AddVehicleDialog() {
             </DialogHeader>
             <div className="grid gap-4 py-4">
                 <div className="space-y-2">
-                    <Label htmlFor="nickname">Nickname</Label>
-                    <Input id="nickname" placeholder="e.g., My Work Car" />
+                    <Label htmlFor="make">Make</Label>
+                    <Input id="make" value={make} onChange={(e) => setMake(e.target.value)} placeholder="e.g., Toyota" />
                 </div>
                  <div className="space-y-2">
-                    <Label htmlFor="type">Car Type</Label>
-                    <Select>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select a car type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="sedan">Sedan</SelectItem>
-                            <SelectItem value="suv">SUV</SelectItem>
-                            <SelectItem value="pickup">Pickup</SelectItem>
-                            <SelectItem value="hatchback">Hatchback</SelectItem>
-                            <SelectItem value="van">Van</SelectItem>
-                            <SelectItem value="coupe">Coupe</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <Label htmlFor="model">Model</Label>
+                    <Input id="model" value={model} onChange={(e) => setModel(e.target.value)} placeholder="e.g., Camry" />
                  </div>
                 <div className="space-y-2">
+                    <Label htmlFor="year">Year</Label>
+                    <Input id="year" type="number" value={year} onChange={(e) => setYear(e.target.value)} placeholder="2022" />
+                </div>
+                <div className="space-y-2">
                     <Label htmlFor="license">License Plate</Label>
-                    <Input id="license" placeholder="GT-1234-20" />
+                    <Input id="license" value={licensePlate} onChange={(e) => setLicensePlate(e.target.value)} placeholder="GT-1234-20" />
                 </div>
             </div>
             <DialogFooter>
-                <Button type="submit">Save Vehicle</Button>
+                <Button onClick={handleSubmit}>Save Vehicle</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>

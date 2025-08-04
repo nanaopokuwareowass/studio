@@ -8,6 +8,7 @@ import {
   MoreHorizontal,
   Search,
 } from "lucide-react"
+import axios from "axios";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -37,17 +38,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useToast } from "@/hooks/use-toast";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
-const servicesData = [
-  { id: "SRV-001", name: "Exterior Wash", description: "A thorough wash of the car's exterior.", price: 35.00, duration: 45 },
-  { id: "SRV-002", name: "Interior Cleaning", description: "Deep cleaning of the car's interior.", price: 50.00, duration: 60 },
-  { id: "SRV-003", name: "Full Detailing", description: "Complete interior and exterior cleaning.", price: 75.00, duration: 120 },
-  { id: "SRV-004", name: "Engine Wash", description: "Safe cleaning of the engine bay.", price: 40.00, duration: 50 },
-  { id: "SRV-005", name: "Wax & Polish", description: "Application of wax for shine and protection.", price: 60.00, duration: 90 },
-];
+const API_URL = "/api";
 
+type Service = {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    duration: number;
+}
 
 export function ServiceManagement() {
+  const [services, setServices] = React.useState<Service[]>([]);
+  const { toast } = useToast();
+
+  const fetchServices = React.useCallback(async () => {
+    try {
+        const response = await axios.get(`${API_URL}/services`);
+        if (response.data.status === 'success') {
+            setServices(response.data.data);
+        } else {
+            toast({ variant: "destructive", title: "Failed to fetch services", description: response.data.message });
+        }
+    } catch (error: any) {
+        toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  }, [toast]);
+
+  React.useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
+
   return (
     <div className="grid flex-1 items-start gap-4">
         <Card>
@@ -68,7 +92,7 @@ export function ServiceManagement() {
                         Export
                         </span>
                     </Button>
-                    <AddServiceDialog />
+                    <AddServiceDialog onServiceAdded={fetchServices} />
                 </div>
             </div>
             </CardHeader>
@@ -87,7 +111,7 @@ export function ServiceManagement() {
                     </TableRow>
                     </TableHeader>
                     <TableBody>
-                    {servicesData.map((service) => (
+                    {services.map((service) => (
                         <TableRow key={service.id}>
                         <TableCell className="font-medium">
                             {service.name}
@@ -96,7 +120,7 @@ export function ServiceManagement() {
                             {service.description}
                         </TableCell>
                          <TableCell className="hidden sm:table-cell">
-                            ${service.price.toFixed(2)}
+                            ${parseFloat(String(service.price)).toFixed(2)}
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
                             {service.duration}
@@ -115,10 +139,10 @@ export function ServiceManagement() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>Edit</DropdownMenuItem>
+                                <EditServiceDialog service={service} onServiceUpdated={fetchServices} />
                                 <DropdownMenuItem>Disable</DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                                <DeleteServiceDialog serviceId={service.id} onServiceDeleted={fetchServices} />
                             </DropdownMenuContent>
                             </DropdownMenu>
                         </TableCell>
@@ -133,9 +157,39 @@ export function ServiceManagement() {
   )
 }
 
-function AddServiceDialog() {
+function AddServiceDialog({ onServiceAdded }: { onServiceAdded: () => void }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [duration, setDuration] = React.useState("");
+  const { toast } = useToast();
+
+  const handleSubmit = async () => {
+    if (!name || !description || !price || !duration) {
+      toast({ variant: "destructive", title: "Validation Error", description: "Please fill all fields." });
+      return;
+    }
+    try {
+      const response = await axios.post(`${API_URL}/services`, { name, description, price, duration });
+      if (response.data.status === 'success') {
+        toast({ title: "Service Created", description: "The new service has been added." });
+        onServiceAdded();
+        setIsOpen(false);
+        setName("");
+        setDescription("");
+        setPrice("");
+        setDuration("");
+      } else {
+        toast({ variant: "destructive", title: "Failed to create service", description: response.data.message });
+      }
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "API Error", description: error.message });
+    }
+  };
+
   return (
-     <Dialog>
+     <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
             <Button size="sm" className="h-8 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
@@ -154,25 +208,120 @@ function AddServiceDialog() {
             <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">Name</Label>
-                    <Input id="name" placeholder="e.g. Headlight Restoration" className="col-span-3" />
+                    <Input id="name" placeholder="e.g. Headlight Restoration" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="description" className="text-right">Description</Label>
-                    <Textarea id="description" placeholder="Describe the service..." className="col-span-3" />
+                    <Textarea id="description" placeholder="Describe the service..." value={description} onChange={(e) => setDescription(e.target.value)} className="col-span-3" />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="price" className="text-right">Price</Label>
-                    <Input id="price" type="number" placeholder="45.00" className="col-span-3" />
+                    <Input id="price" type="number" placeholder="45.00" value={price} onChange={(e) => setPrice(e.target.value)} className="col-span-3" />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="duration" className="text-right">Duration (min)</Label>
-                    <Input id="duration" type="number" placeholder="60" className="col-span-3" />
+                    <Input id="duration" type="number" placeholder="60" value={duration} onChange={(e) => setDuration(e.target.value)} className="col-span-3" />
                 </div>
             </div>
             <DialogFooter>
-                <Button type="submit">Save Service</Button>
+                <Button onClick={handleSubmit}>Save Service</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>
   )
+}
+
+function EditServiceDialog({ service, onServiceUpdated }: { service: Service, onServiceUpdated: () => void }) {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [name, setName] = React.useState(service.name);
+    const [description, setDescription] = React.useState(service.description);
+    const [price, setPrice] = React.useState(String(service.price));
+    const [duration, setDuration] = React.useState(String(service.duration));
+    const { toast } = useToast();
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.put(`${API_URL}/services`, { id: service.id, name, description, price, duration });
+            if (response.data.status === 'success') {
+                toast({ title: "Service Updated", description: "The service has been updated." });
+                onServiceUpdated();
+                setIsOpen(false);
+            } else {
+                toast({ variant: "destructive", title: "Failed to update service", description: response.data.message });
+            }
+        } catch (error: any) {
+            toast({ variant: "destructive", title: "API Error", description: error.message });
+        }
+    };
+
+    return (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Edit</DropdownMenuItem>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Edit Service</DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name-edit" className="text-right">Name</Label>
+                        <Input id="name-edit" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="description-edit" className="text-right">Description</Label>
+                        <Textarea id="description-edit" value={description} onChange={(e) => setDescription(e.target.value)} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="price-edit" className="text-right">Price</Label>
+                        <Input id="price-edit" type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="duration-edit" className="text-right">Duration (min)</Label>
+                        <Input id="duration-edit" type="number" value={duration} onChange={(e) => setDuration(e.target.value)} className="col-span-3" />
+                    </div>
+                </div>
+                <DialogFooter>
+                    <Button onClick={handleSubmit}>Save Changes</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+}
+
+function DeleteServiceDialog({ serviceId, onServiceDeleted }: { serviceId: string, onServiceDeleted: () => void }) {
+    const { toast } = useToast();
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(`${API_URL}/services`, { data: { id: serviceId } });
+            if (response.data.status === 'success') {
+                toast({ title: "Service Deleted", description: "The service has been removed." });
+                onServiceDeleted();
+            } else {
+                toast({ variant: "destructive", title: "Failed to delete service", description: response.data.message });
+            }
+        } catch (error: any) {
+            toast({ variant: "destructive", title: "API Error", description: error.message });
+        }
+    };
+    
+    return (
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                <DropdownMenuItem className="text-destructive" onSelect={e => e.preventDefault()}>Delete</DropdownMenuItem>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This will permanently delete this service. This action cannot be undone.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
 }
